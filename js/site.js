@@ -1,14 +1,5 @@
-/* ============================================================
-   HERO MEDIA PLAYLIST  (home page)
-   Add more hero videos / GIFs here. They crossfade in order.
-   video: { type:'video', src, mobile, poster }
-   image/gif: { type:'image', src, duration (ms) }
-   kind:'warm' nudges framing for warmer clips.
-   ============================================================ */
-const HERO_MEDIA = [
-  { type:'video', src:'media/hero-1.mp4', mobile:'media/hero-1-m.mp4', poster:'media/hero-1-poster.webp' },
-  { type:'video', src:'media/hero-2.mp4', mobile:'media/hero-2-m.mp4', poster:'media/hero-2-poster.webp', kind:'warm' },
-];
+/* Hero: light hands video in light theme, dark hands video in dark theme.
+   Hero copy fades in when the hands touch (data-reveal seconds on each <video>). */
 
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],root=document.documentElement,
   ic=n=>`<svg class="i"><use href="#${n}"/></svg>`,RM=matchMedia('(prefers-reduced-motion:reduce)').matches,
@@ -20,7 +11,7 @@ const tb=$('#theme'),setIcon=()=>tb&&(tb.innerHTML=ic(root.dataset.theme==='dark
 try{const s=localStorage.getItem('oi-theme-v2');if(s)root.dataset.theme=s}catch(e){}
 setIcon();
 if(tb)tb.onclick=()=>{
-  const flip=()=>{root.dataset.theme=root.dataset.theme==='dark'?'light':'dark';setIcon();try{localStorage.setItem('oi-theme-v2',root.dataset.theme)}catch(_){}};
+  const flip=()=>{root.dataset.theme=root.dataset.theme==='dark'?'light':'dark';setIcon();window.heroSync&&window.heroSync();try{localStorage.setItem('oi-theme-v2',root.dataset.theme)}catch(_){}};
   if(!document.startViewTransition||RM)return flip();
   const r=tb.getBoundingClientRect(),x=r.left+r.width/2,y=r.top+r.height/2;
   root.style.setProperty('--vx',x+'px');root.style.setProperty('--vy',y+'px');
@@ -38,42 +29,33 @@ if(tb)tb.onclick=()=>{
   h.innerHTML=[...h.childNodes].map(n=>n.nodeType===3?wrap(n.textContent):n.tagName==='EM'?`<em>${wrap(n.textContent)}</em>`:n.outerHTML).join('');
 })();
 
-/* ---------- hero media playlist: crossfade *before* a clip ends ---------- */
-(()=>{const box=$('#heroMedia');if(!box)return;let cur=0,paused=RM,timer;
-  const dots=$('#mediaDots'),ctl=$('#mediaCtl');
-  const els=HERO_MEDIA.map((m,k)=>{let el;
-    if(m.type==='video'){el=document.createElement('video');el.muted=true;el.playsInline=true;el.setAttribute('muted','');el.setAttribute('playsinline','');
-      el.preload=k?'none':'auto';if(m.poster)el.poster=m.poster;el.src=(MOB&&m.mobile)?m.mobile:m.src;
-      if(HERO_MEDIA.length===1)el.loop=true;
-      else el.addEventListener('timeupdate',()=>{if(cur===k&&el.duration&&el.currentTime>el.duration-1.6&&!el._x){el._x=1;next()}});}
-    else{el=document.createElement('img');el.src=m.src;el.alt=''}
-    el.className='slide';box.appendChild(el);return el});
-  if(dots&&els.length>1)dots.innerHTML=els.map(()=>'<i></i>').join('');
-  function show(k){const m=HERO_MEDIA[k],el=els[k];box.dataset.kind=m.kind||'';
-    els.forEach((e,j)=>{const was=e.classList.contains('on');e.classList.toggle('on',j===k);if(j!==k&&was){e.classList.add('leaving');setTimeout(()=>{e.classList.remove('leaving');if(e.tagName==='VIDEO')e.pause()},1300)}else e.classList.remove('leaving')});
-    if(dots)[...dots.children].forEach((d,j)=>{d.classList.remove('on');if(j===k){void d.offsetWidth;d.classList.add('on')}});
-    clearTimeout(timer);
-    if(el.tagName==='VIDEO'){el._x=0;el.preload='auto';el.currentTime=0;
-      const setDur=()=>dots&&dots.style.setProperty('--dur',(el.duration-1.6)+'s');el.duration?setDur():el.addEventListener('loadedmetadata',setDur,{once:true});
-      if(!paused)el.play().catch(()=>{})}
-    else if(els.length>1){dots&&dots.style.setProperty('--dur',(m.duration||6000)/1000+'s');timer=setTimeout(next,m.duration||6000)}
-    const nx=els[(k+1)%els.length];if(nx!==el&&nx.tagName==='VIDEO')nx.preload='auto';}
-  function next(){if(paused)return;cur=(cur+1)%els.length;show(cur)}
-  show(0);
+/* ---------- hero video per theme + reveal copy at the touch moment ---------- */
+(()=>{const box=$('#heroMedia');if(!box)return;const L=$('.hv-light'),D=$('.hv-dark'),ctl=$('#mediaCtl');let paused=RM,revealed=false,rt;
+  const reveal=()=>{if(revealed)return;revealed=true;clearTimeout(rt);root.classList.add('ready');window.startCounters&&startCounters()};
+  window.heroReveal=reveal;
+  const active=()=>root.dataset.theme==='dark'?D:L,idle=()=>root.dataset.theme==='dark'?L:D;
+  const load=v=>{if(!v.src){v.src=(MOB&&v.dataset.srcM)?v.dataset.srcM:v.dataset.src;v.preload='auto'}};
+  [L,D].forEach(v=>{v.loop=true;v.muted=true;
+    v.addEventListener('timeupdate',()=>{if(v===active()&&!revealed&&v.currentTime>=+v.dataset.reveal)reveal()})});
+  function play(fromStart){const a=active(),b=idle();load(a);b.pause();if(fromStart)a.currentTime=0;
+    if(!paused)a.play().catch(()=>reveal());}
+  window.heroSync=()=>play(false);           // called after a theme toggle
+  window.replayHero=()=>{revealed=false;root.classList.remove('ready');play(true);rt=setTimeout(reveal,7000)};
+  const intro=$('.intro'),delay=intro&&!root.classList.contains('fast')?1500:150;
+  if(RM)reveal();else{setTimeout(()=>play(true),delay);rt=setTimeout(reveal,delay+6500)}
+  addEventListener('scroll',()=>{if(scrollY>60)reveal()},{passive:true});
   const setCtl=()=>ctl&&(ctl.innerHTML=ic(paused?'play':'pause'),ctl.setAttribute('aria-label',paused?'Play background video':'Pause background video'));
-  if(ctl){setCtl();ctl.onclick=()=>{paused=!paused;const v=els[cur];if(v.tagName==='VIDEO')paused?v.pause():v.play().catch(()=>{});
-    if(dots)dots.style.animationPlayState=paused?'paused':'running';$$('#mediaDots i').forEach(d=>d.style.setProperty('animation-play-state',paused?'paused':'running'));setCtl()}}
-  new IntersectionObserver(([e])=>{const v=els[cur];if(v.tagName!=='VIDEO'||paused)return;e.isIntersecting?v.play().catch(()=>{}):v.pause()}).observe($('section#home'));
-  window.replayHero=()=>{cur=0;show(0)};
+  if(ctl){setCtl();ctl.onclick=()=>{paused=!paused;paused?active().pause():active().play().catch(()=>{});if(paused)reveal();setCtl()}}
+  new IntersectionObserver(([e])=>{if(paused)return;e.isIntersecting?active().play().catch(()=>{}):active().pause()}).observe($('section#home'));
 })();
 
 /* ---------- lazy autoplay for section videos (play only when visible) ---------- */
 $$('video[data-auto]').forEach(v=>{if(RM)return;new IntersectionObserver(([e])=>e.isIntersecting?v.play().catch(()=>{}):v.pause(),{threshold:.25}).observe(v)});
 
 /* ---------- kick off hero entrance ---------- */
-requestAnimationFrame(()=>root.classList.add('ready'));
-const rp=$('#replay');if(rp)rp.onclick=e=>{e.preventDefault();window.lenis?lenis.scrollTo(0):scrollTo({top:0,behavior:'smooth'});
-  root.classList.remove('ready');void document.body.offsetWidth;root.classList.add('fast','ready');window.replayHero&&window.replayHero()};
+if(!HOME)requestAnimationFrame(()=>root.classList.add('ready'));
+root.classList.add('fast');
+const rp=$('#replay');if(rp)rp.onclick=e=>{e.preventDefault();window.lenis?lenis.scrollTo(0):scrollTo({top:0,behavior:'smooth'});window.replayHero&&window.replayHero()};
 
 /* ---------- marquee seamless loop ---------- */
 (()=>{const t=$('#mq');if(t)t.innerHTML+=t.innerHTML})();
@@ -114,7 +96,8 @@ if(!MOB)$$('.card,.prod').forEach(c=>c.addEventListener('pointermove',e=>{const 
 /* ---------- counters (ease-out) ---------- */
 const co=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;co.unobserve(e.target);const el=e.target,n=+el.dataset.count,suf=el.dataset.suf||'+',t0=performance.now(),D=1400;
   (function f(t){const p=Math.min(1,(t-t0)/D),v=Math.round(n*(1-Math.pow(1-p,4)));el.textContent=v+suf;if(p<1)requestAnimationFrame(f)})(t0)}));
-setTimeout(()=>$$('[data-count]').forEach(el=>co.observe(el)),RM||root.classList.contains('fast')?300:2600);
+window.startCounters=()=>setTimeout(()=>$$('[data-count]').forEach(el=>{co.unobserve(el);co.observe(el)}),1300);
+if(!HOME||RM||root.classList.contains('ready'))startCounters();
 
 /* ---------- page transition between pages (panel wipe; exit faster than enter) ---------- */
 (()=>{const pt=$('.pt');if(!pt||RM)return;

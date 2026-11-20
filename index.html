@@ -18,6 +18,7 @@
 <link rel="icon" type="image/png" href="img/favicon.png">
 <link rel="apple-touch-icon" href="img/logo.webp">
 <link rel="preload" as="image" href="media/hero-1-poster.webp" fetchpriority="high">
+<script>try{var t=localStorage.getItem("oi-theme-v2");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Serif:ital@1&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -97,16 +98,17 @@
  <div class="hero-glow" aria-hidden="true"></div>
  <div class="hero-grid" aria-hidden="true"></div>
  <!-- Hero media playlist: add more videos / gifs in HERO_MEDIA (script at bottom) -->
- <div class="hero-media" id="heroMedia" aria-hidden="true"></div>
- <div class="media-dots" id="mediaDots" aria-hidden="true"></div>
+ <div class="hero-media" id="heroMedia" aria-hidden="true">
+  <video class="hv hv-light" muted playsinline preload="auto" poster="media/hero-1-poster.webp" data-src="media/hero-1.mp4" data-src-m="media/hero-1-m.mp4" data-reveal="3.3"></video>
+  <video class="hv hv-dark" muted playsinline preload="none" poster="media/hero-dark-poster.webp" data-src="media/hero-dark.mp4" data-reveal="4.3"></video>
+ </div>
  <button class="media-ctl" id="mediaCtl" type="button"></button>
 
  <div class="hero-main">
   <div class="wrap" style="width:100%;display:flex;justify-content:center">
    <div class="hero-copy" id="heroCopy">
-    <span class="badge fx" style="--d:1.45s"><b>New</b> AI-Powered Business Solutions in India</span>
     <h1 id="heroTitle">Your Business. Our Technology.<br class="br"> <em>A Smarter Future.</em></h1>
-    <p class="lead fx" style="--d:2.25s">Open Idea helps small and medium businesses build, automate and grow with custom websites, business software, CRM, WhatsApp AI assistants and digital marketing.</p>
+    <p class="lead fx" style="--d:2.25s">Open Idea brings <strong>AI-powered business solutions</strong> to small and medium businesses in India: custom websites, business software, CRM, WhatsApp AI assistants and digital marketing that help you build, automate and grow.</p>
     <div class="ctas fx" style="--d:2.45s">
      <a href="#services" class="btn btn-p">Explore Our Services <svg class="i"><use href="#arrow"/></svg></a>
      <a href="#home" class="btn btn-o" id="replay"><span class="dot"><svg class="i"><use href="#play"/></svg></span> Watch Overview</a>
@@ -146,7 +148,7 @@
 
 <section class="alt" aria-labelledby="duo-h">
  <div class="wrap duo">
-  <div class="duo-media rv" data-rv="wipe"><video data-auto muted loop playsinline preload="none" poster="media/human-ai-poster.webp" src="media/human-ai.mp4" aria-label="A human hand and a robotic hand reaching toward each other"></video></div>
+  <div class="duo-media rv" data-rv="wipe"><video data-auto muted loop playsinline preload="none" poster="media/hero-2-poster.webp" src="media/hero-2.mp4" aria-label="A hand sketches a glowing face while a robotic hand reaches in to connect"></video></div>
   <div class="rv" data-rv="right">
    <span class="eyebrow">The Right Balance</span>
    <h2 id="duo-h">Human Creativity <span class="ser">×</span> AI Intelligence</h2>
@@ -304,7 +306,6 @@
 
 <footer>
  <div class="wrap">
-  <div class="f-big" aria-hidden="true">Open <em>Idea</em></div>
   <div class="f-grid">
    <div class="f-brand">
     <a href="#home" class="logo"><img src="img/logo.webp" alt="" width="36" height="36" loading="lazy">Open Idea</a>

@@ -8,7 +8,7 @@ Static site for **Open Idea** (Ecosyz Core Solutions Pvt. Ltd.). Plain HTML/CSS/
 - `img/`, `media/` – all images and videos (permanent copies, no external asset links)
 
 ## Hero media
-Edit `HERO_MEDIA` at the top of `js/site.js` to add/remove hero videos or GIFs (they crossfade).
+The hero has one hands video per theme: `.hv-light` and `.hv-dark` in `index.html`. Each `<video>` has `data-reveal` (seconds): the hero text fades in when the clip reaches that moment.
 
 ## Deploy (Vercel)
 Vercel project `open-idea` builds by downloading this repo at a pinned commit into `public/`.

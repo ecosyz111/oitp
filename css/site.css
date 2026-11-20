@@ -13,8 +13,7 @@
   --bg:#08131F;--bg-soft:#0B1A29;--card:#0F2233;--text:#E6EDF5;--muted:#93A8BB;--border:#1A3247;
   --shadow:0 1px 2px rgba(0,0,0,.2),0 14px 34px -10px rgba(0,0,0,.5);--foot:#050D16;
 }
-/* hero is always light, whatever the site theme */
-.hero,header:not(.solid){--bg:#ffffff;--card:#ffffff;--text:#0C1B2A;--muted:#55657A;--border:#E3ECF2;color:var(--text)}
+/* hero follows the site theme: light video in light, dark video in dark */
 
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;scroll-padding-top:var(--hdr)}
@@ -100,7 +99,7 @@ header.solid .nav{background:color-mix(in srgb,var(--bg) 82%,transparent);backdr
 .ready .hero h1 .w>span{animation:wordUp 1.1s var(--ease-out) forwards;animation-delay:calc(1.6s + var(--i) * 70ms)}
 .hero .fx{opacity:0;transform:translateY(22px);filter:blur(6px)}
 .ready .hero .fx{animation:fxIn 1s var(--ease-out) forwards;animation-delay:var(--d)}
-.ready .hero-media{animation:mediaIn 2s 1.2s var(--ease-out) both}
+.hero-media{animation:mediaIn 1.6s .3s var(--ease-out) both}
 @keyframes wordUp{to{transform:none}}
 @keyframes fxIn{to{opacity:1;transform:none;filter:none}}
 @keyframes mediaIn{from{opacity:0;transform:translateY(40px) scale(1.04)}to{opacity:1;transform:none}}
@@ -501,3 +500,40 @@ html.lenis,html.lenis body{height:auto}
 @keyframes kenburns{from{transform:scale(1)}to{transform:scale(1.05)}}
 .hero-media .slide.on:only-child{animation:none}
 @media (prefers-reduced-motion:reduce){.hero-media .slide{filter:none;transform:none}}
+
+
+/* ================= hero: one hands video per theme ================= */
+.hero-media .hv{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 62%;opacity:0;transition:opacity .9s var(--ease)}
+:root:not([data-theme="dark"]) .hero-media .hv-light,:root[data-theme="dark"] .hero-media .hv-dark{opacity:1}
+/* copy waits for the hands to touch, then fades in (storyboard scene 5) */
+.hero .fx,.hero h1 .w>span{transition:none}
+:root[data-theme="dark"] .hero{background:#040A13}
+:root[data-theme="dark"] .hero-glow,:root[data-theme="dark"] .hero-grid{opacity:0}
+:root[data-theme="dark"] .hero-media{top:0;height:100%;-webkit-mask-image:none;mask-image:none}
+:root[data-theme="dark"] .hero-media:after{height:22%;background:linear-gradient(0deg,rgba(4,10,19,.75),transparent)}
+:root[data-theme="dark"] .hero-media .hv-dark{object-position:center}
+:root[data-theme="dark"] .hero h1 em{color:var(--accent)}
+:root[data-theme="dark"] .hero .lead{color:#C3D2E0;text-shadow:0 1px 14px rgba(4,10,19,.9)}
+:root[data-theme="dark"] .hero .badge{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.14);color:#C3D2E0;text-shadow:none}
+:root[data-theme="dark"] .hero .badge b{background:var(--primary);color:#04121C}
+:root[data-theme="dark"] .hero .btn-o{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18);color:#fff}
+:root[data-theme="dark"] .hero .btn-p{background:#fff;color:var(--navy)}
+:root[data-theme="dark"] .hero .btn-p:hover{color:#fff}
+:root[data-theme="dark"] .stats-in{background:rgba(8,19,31,.55);border-color:rgba(255,255,255,.1)}
+:root[data-theme="dark"] .stat+.stat:before{background:rgba(255,255,255,.12)}
+:root[data-theme="dark"] .stat svg{color:var(--accent)}
+:root[data-theme="dark"] .media-ctl{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.18);color:#fff}
+:root[data-theme="dark"] .scroll-cue{border-color:rgba(255,255,255,.3)}
+:root[data-theme="dark"] .scroll-cue:after{background:#fff}
+:root[data-theme="dark"] header:not(.solid) .nav{color:#E6EDF5}
+@media (max-width:900px){
+  :root[data-theme="dark"] .hero-media{top:auto;height:52%;-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 25%);mask-image:linear-gradient(180deg,transparent 0,#000 25%)}
+  :root[data-theme="dark"] header .nav{background:rgba(8,19,31,.7)}
+}
+
+.hero .lead strong{color:var(--text);font-weight:600}
+.hero h1{margin-top:8px}
+:root[data-theme="dark"] .hero-copy{position:relative}
+:root[data-theme="dark"] .hero-copy:before{content:"";position:absolute;inset:-12% -14% -6%;z-index:-1;pointer-events:none;background:radial-gradient(closest-side,rgba(4,10,19,.72),rgba(4,10,19,.35) 60%,transparent)}
+:root[data-theme="dark"] .nav-r .btn-p{background:#fff;color:var(--navy)}
+:root[data-theme="dark"] .nav-r .btn-p:hover{color:#fff}
