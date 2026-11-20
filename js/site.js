@@ -143,7 +143,7 @@ function premium(){if(!G()||RM)return;const {gsap,ScrollTrigger}=window;gsap.reg
       scrollTrigger:{trigger:h,start:'top 88%'},delay:h.closest('.page-hero')?.35:0});});
 
   /* images: subtle parallax inside their frames */
-  $$('.split-media img,.duo-media video,.svc-side .thumb img').forEach(m=>{gsap.fromTo(m,{yPercent:-6,scale:1.12},{yPercent:6,scale:1.12,ease:'none',
+  $$('.split-media img,.duo-media video,.svc-side .thumb img,.auto-bg img').forEach(m=>{gsap.fromTo(m,{yPercent:-6,scale:1.12},{yPercent:6,scale:1.12,ease:'none',
     scrollTrigger:{trigger:m.parentElement,start:'top bottom',end:'bottom top',scrub:true}})});
 
   /* marquee reacts to scroll velocity */
@@ -161,4 +161,47 @@ function premium(){if(!G()||RM)return;const {gsap,ScrollTrigger}=window;gsap.reg
   'https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js',
   'https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js'];
   let n=0;s.forEach(src=>{const el=document.createElement('script');el.src=src;el.async=false;el.onload=el.onerror=()=>{if(++n===s.length)document.fonts.ready.then(premium)};document.head.appendChild(el)});
+})();
+
+/* =====================================================================
+   LIVE DEMOS: 3D coverflow slideshow. Centre card opens the demo in a new tab.
+   ===================================================================== */
+(()=>{const cf=$('#cf'),stage=$('#cfStage'),dataEl=$('#demoData');if(!cf||!dataEl)return;
+  const D=JSON.parse(dataEl.textContent),esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
+  stage.innerHTML=D.map((d,i)=>`<a class="cf-card" href="${esc(d.u)}" target="_blank" rel="noopener" data-i="${i}" aria-label="${esc(d.n)}, ${esc(d.t)}: open live demo in a new tab">
+    <div class="cf-ph"><img src="${d.i}" alt="" loading="${i<4?'eager':'lazy'}" decoding="async"><span class="cf-tag">${esc(d.t)}</span><span class="cf-view">View<br>live</span></div>
+    <div class="cf-cap"><h3>${esc(d.n)}</h3><p>${esc(d.d)}</p><div class="cf-tags">${d.g.map(g=>`<span>${esc(g)}</span>`).join('')}</div></div></a>`).join('');
+  const cards=[...stage.children],curEl=$('#cfCur'),totEl=$('#cfTot'),live=$('#cfLive');
+  let list=D.map((_,i)=>i),cur=0,timer,hover=false,inView=false;
+  const pad=n=>String(n).padStart(2,'0');
+  function layout(){const n=list.length,narrow=innerWidth<=700,cw=cf.getBoundingClientRect().width&&parseFloat(getComputedStyle(cf).getPropertyValue('--cw'))||cards[0].offsetWidth;
+    const w=cards[0].offsetWidth;
+    cards.forEach((c,i)=>{const k=list.indexOf(i);
+      if(k<0){c.classList.add('off');c.classList.remove('c');c.style.transform='translateZ(-600px) scale(.4)';c.style.zIndex=0;c.tabIndex=-1;return}
+      let d=k-cur;if(d>n/2)d-=n;if(d<-n/2)d+=n;const a=Math.abs(d),s=Math.sign(d),max=narrow?1:4;
+      c.classList.toggle('off',a>max);c.classList.toggle('c',a===0);c.tabIndex=a===0?0:-1;c.style.zIndex=50-a;
+      const x=a===0?0:s*w*(narrow?(.86+(a-1)*.1):(.6+(a-1)*.2)),sc=a===0?1:Math.max(.5,(narrow?.84:.8)-(a-1)*.09),ry=a===0?0:-s*(narrow?12:24);
+      c.style.transform=`translateX(${x}px) translateZ(${-a*90}px) rotateY(${ry}deg) scale(${sc})`;
+      c.style.filter=a===0?'none':`brightness(${Math.max(.35,.72-(a-1)*.12)})`});
+    curEl.textContent=pad(cur+1);totEl.textContent=pad(n);
+    const d=D[list[cur]];live.textContent=`${d.n}, ${cur+1} of ${n}`}
+  const go=k=>{const n=list.length;cur=(k%n+n)%n;layout()};
+  const next=()=>go(cur+1),prev=()=>go(cur-1);
+  $('.cf-arrow.next').onclick=()=>{next();restart()};$('.cf-arrow.prev').onclick=()=>{prev();restart()};
+  stage.addEventListener('click',e=>{const c=e.target.closest('.cf-card');if(!c)return;const k=list.indexOf(+c.dataset.i);
+    if(k!==cur){e.preventDefault();go(k);restart()}});
+  cf.addEventListener('keydown',e=>{if(e.key==='ArrowRight'){next();restart()}else if(e.key==='ArrowLeft'){prev();restart()}});
+  $$('#cfFilters button').forEach(b=>b.onclick=()=>{$$('#cfFilters button').forEach(x=>x.classList.toggle('on',x===b));
+    const f=b.dataset.f;list=D.map((d,i)=>[d,i]).filter(([d])=>f==='all'||d.c===f).map(([,i])=>i);cur=0;layout();restart()});
+  /* swipe / drag */
+  let sx=null,dragged=false;stage.addEventListener('pointerdown',e=>{sx=e.clientX;dragged=false});
+  addEventListener('pointerup',e=>{if(sx===null)return;const dx=e.clientX-sx;sx=null;if(Math.abs(dx)>45){dragged=true;dx<0?next():prev();restart()}});
+  stage.addEventListener('click',e=>{if(dragged){e.preventDefault();e.stopImmediatePropagation();dragged=false}},true);
+  stage.addEventListener('dragstart',e=>e.preventDefault());
+  /* gentle autoplay: only while visible, paused on hover/focus */
+  function restart(){clearInterval(timer);if(RM)return;timer=setInterval(()=>{if(inView&&!hover&&!document.hidden)next()},4200)}
+  cf.addEventListener('pointerenter',()=>hover=true);cf.addEventListener('pointerleave',()=>hover=false);
+  cf.addEventListener('focusin',()=>hover=true);cf.addEventListener('focusout',()=>hover=false);
+  new IntersectionObserver(([e])=>inView=e.isIntersecting,{threshold:.35}).observe(cf);
+  addEventListener('resize',layout);layout();restart();
 })();

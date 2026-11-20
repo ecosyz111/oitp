@@ -84,7 +84,7 @@
   <a href="#home" class="logo" aria-label="Open Idea home"><img src="img/logo.webp" alt="Open Idea logo" width="36" height="36">Open Idea</a>
   <nav class="menu" aria-label="Main">
    <a href="services.html">Services</a><a href="products.html">Products</a><a href="#automation">AI Automation</a>
-   <a href="#industries">Industries</a><a href="#process">Process</a><a href="#contact">Contact</a>
+   <a href="#industries">Industries</a><a href="#demos">Demos</a><a href="#process">Process</a><a href="#contact">Contact</a>
   </nav>
   <div class="nav-r">
    <button class="tbtn" id="theme" aria-label="Switch light or dark theme"><svg class="i"><use href="#moon"/></svg></button>
@@ -178,7 +178,8 @@
 <section id="automation" style="padding-top:0">
  <div class="wrap">
   <div class="auto-box rv" data-rv="scale">
-   <img class="auto-art" src="img/auto.webp" alt="" loading="lazy" aria-hidden="true">
+   <div class="auto-bg" aria-hidden="true"><img src="img/auto.webp" alt="" loading="lazy"></div>
+   <span class="auto-live"><i></i>Working 24×7</span>
    <div class="auto-txt">
     <span class="eyebrow">AI Automation</span>
     <h2>Let AI handle the <em>repetitive</em> work.</h2>
@@ -212,6 +213,25 @@
    <a class="ind rv" href="#contact"><div class="ph"><img src="img/i8.webp" alt="Professional services" loading="lazy"></div>Services</a>
   </div>
  </div>
+</section>
+
+<section id="demos" class="demos" aria-labelledby="demos-h">
+ <div class="wrap">
+  <div class="sec-head rv"><span class="eyebrow">Live Demos</span><h2 id="demos-h">Don't take our word for it. <em>Open one.</em></h2><p>Yours can look like this in 2–5 days. Real, working websites built for businesses like yours.</p></div>
+ </div>
+ <div class="cf" id="cf" role="region" aria-roledescription="carousel" aria-label="Live demo websites" tabindex="0">
+  <button class="cf-arrow prev" type="button" aria-label="Previous demo"><svg viewBox="0 0 24 48" aria-hidden="true"><path d="M20 4 4 24l16 20"/></svg></button>
+  <div class="cf-stage" id="cfStage"></div>
+  <button class="cf-arrow next" type="button" aria-label="Next demo"><svg viewBox="0 0 24 48" aria-hidden="true"><path d="m4 4 16 20L4 44"/></svg></button>
+ </div>
+ <div class="wrap cf-bar">
+  <div class="cf-filters" id="cfFilters" role="group" aria-label="Filter demos">
+   <button type="button" data-f="all" class="on">All</button><button type="button" data-f="retail">Retail</button><button type="button" data-f="food">Food &amp; Stay</button><button type="button" data-f="edu">Education</button><button type="button" data-f="studio">Studios</button><button type="button" data-f="industry">Industry</button>
+  </div>
+  <div class="cf-count" aria-hidden="true"><b id="cfCur">01</b><i>/</i><span id="cfTot">19</span></div>
+ </div>
+ <p class="sr" id="cfLive" aria-live="polite"></p>
+ <script type="application/json" id="demoData">[{"n": "Rivaaz Jewellers", "t": "Gold & Silver Jeweller", "d": "Heritage and hallmarking have to read before a single product does.", "u": "https://openidea.co.in/demos/mangalam-jewellers/index.html", "i": "img/demos/mangalam-jewellers.webp", "g": ["Collections", "Hallmark", "Since 1978"], "c": "retail"}, {"n": "ORAA", "t": "Handloom & Textiles", "d": "From the loom to the drape — the cloth had to carry the page.", "u": "https://openidea.co.in/demos/oraa/index.html", "i": "img/demos/oraa.webp", "g": ["Lookbook", "Weaves", "Enquiry"], "c": "retail"}, {"n": "Dhabba Kitchen & Bar", "t": "Restaurant & Bar", "d": "Menu, combos and offers with a WhatsApp order button on every screen.", "u": "https://khanna.openidea.co.in/", "i": "img/demos/dhabba.webp", "g": ["Menu", "WhatsApp orders", "Offers"], "c": "food"}, {"n": "Bhojpatra", "t": "Feast Booking Platform", "d": "Not a brochure site — a working product, with booking and vendors behind it.", "u": "https://www.bhojpatra.co.in/", "i": "img/demos/bhojpatra.webp", "g": ["Platform", "Booking", "Live product"], "c": "food"}, {"n": "Feastcraft Catering", "t": "Wedding & Event Catering", "d": "Menus and past events — catering is booked on appetite and proof.", "u": "https://www.openidea.co.in/sample-caterer", "i": "img/demos/wedding-caterer.webp", "g": ["Menus", "Events", "Enquiry"], "c": "food"}, {"n": "Frameline Studio", "t": "Wedding & Portrait Photography", "d": "A photographer is hired off the portfolio — so the work opens the page.", "u": "https://openidea.co.in/demos/wedding-photography/index.html", "i": "img/demos/wedding-photography.webp", "g": ["Portfolio", "Weddings", "Enquiry"], "c": "studio"}, {"n": "Brightpath Tuition", "t": "Tuition Centre", "d": "Parents look for the teacher and the timings before anything else.", "u": "https://openidea.co.in/demos/tuition-centre/index.html", "i": "img/demos/tuition-centre.webp", "g": ["Classes", "Timings", "Enquiry"], "c": "edu"}, {"n": "Summit Academy", "t": "Coaching Centre", "d": "Faculty, batches and results — what an admission decision actually turns on.", "u": "https://openidea.co.in/demos/coaching-academy/index.html", "i": "img/demos/coaching-academy.webp", "g": ["Faculty", "Batches", "Results"], "c": "edu"}, {"n": "Bytewise Computer Education", "t": "Computer Training Institute", "d": "Courses, duration and fees stated plainly, so nobody has to call to ask.", "u": "https://openidea.co.in/demos/computer-training/index.html", "i": "img/demos/computer-training.webp", "g": ["Courses", "Fees", "Placement"], "c": "edu"}, {"n": "Portrait House Studio", "t": "Photo Studio & Framing", "d": "Studio work and framing under one roof — both had to be findable.", "u": "https://openidea.co.in/demos/photo-studio/index.html", "i": "img/demos/photo-studio.webp", "g": ["Studio", "Framing", "Booking"], "c": "studio"}, {"n": "Serenity Residency", "t": "Hotel & Luxury Stay", "d": "Rooms, tariffs and availability answering themselves before anyone calls.", "u": "https://www.openidea.co.in/kalptaru-residency-sample", "i": "img/demos/luxury-residency.webp", "g": ["Rooms", "Tariff", "Booking"], "c": "food"}, {"n": "Innovative Interior", "t": "Interior Design & Fit-out", "d": "A fit-out studio sells on finished rooms — the gallery had to carry the whole pitch.", "u": "https://openidea.co.in/demos/innovative-interior/index.html", "i": "img/demos/innovative-interior.webp", "g": ["Gallery", "Fit-out", "Enquiry"], "c": "studio"}, {"n": "Trendline Collection", "t": "Fashion Boutique", "d": "A boutique lives on the lookbook — browsing had to feel like the shop.", "u": "https://www.openidea.co.in/merch_sample", "i": "img/demos/merch-boutique.webp", "g": ["Lookbook", "Collections", "WhatsApp"], "c": "retail"}, {"n": "Voltline Electricals", "t": "Electrical Shop & Dealer", "d": "Brands stocked and counter credibility — trade buyers check both first.", "u": "https://www.openidea.co.in/electrical-sample", "i": "img/demos/electrical-store.webp", "g": ["Brands", "Dealer", "Enquiry"], "c": "retail"}, {"n": "Uniwear Atelier", "t": "Uniform Manufacturer", "d": "School and corporate uniforms — bulk orders start with trust in the stitching.", "u": "https://openidea.co.in/demos/pushpanjali-wear/index.html", "i": "img/demos/pushpanjali-wear.webp", "g": ["Uniforms", "Bulk orders", "Atelier"], "c": "industry"}, {"n": "Ironline Steel Works", "t": "Architectural Steel", "d": "Railings, gates and structures — the portfolio is the pitch, so the gallery leads.", "u": "https://openidea.co.in/demos/mmh-steel-fabrication/index.html", "i": "img/demos/mmh-steel-fabrication.webp", "g": ["Gallery", "Fabrication", "Site visits"], "c": "industry"}, {"n": "Weldcraft Engineering", "t": "Welding Supply & Fabrication", "d": "Two businesses on one site, without either getting buried.", "u": "https://openidea.co.in/demos/sr-engineering-works/index.html", "i": "img/demos/sr-engineering-works.webp", "g": ["Supplies", "Fabrication", "Quote"], "c": "industry"}, {"n": "Autopoint Spares", "t": "Auto Parts Retail", "d": "Buyers arrive knowing exactly what they need — findability comes first.", "u": "https://openidea.co.in/demos/star-automobiles/index.html", "i": "img/demos/star-automobiles.webp", "g": ["Parts", "Brands", "Enquiry"], "c": "retail"}, {"n": "Grandvista Convention Centre", "t": "Convention & Exhibition Venue", "d": "Booked months ahead — halls, capacity and dates had to answer themselves.", "u": "https://openidea.co.in/demos/labh-ganga/index.html", "i": "img/demos/labh-ganga.webp", "g": ["Halls", "Capacity", "Booking"], "c": "food"}]</script>
 </section>
 
 <section id="partner" aria-labelledby="partner-h">
