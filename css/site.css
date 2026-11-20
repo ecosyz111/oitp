@@ -632,3 +632,149 @@ html.lenis,html.lenis body{height:auto}
   .auto-list li:last-child{grid-column:1/-1}
 }
 @media (max-width:900px){.auto-box:before{background:linear-gradient(180deg,rgba(5,12,20,.1) 0%,rgba(5,12,20,.55) 22%,rgba(5,12,20,.92) 42%,rgba(5,12,20,.97) 100%)}.auto-bg img{object-position:58% 0;height:46%;transform:none}.auto-txt{padding-top:190px}}
+
+/* dark hero: after the touch, the video recedes (focus pull) so the copy reads cleanly. Light theme untouched. */
+:root[data-theme="dark"] .hero-media .hv-dark{object-position:center 22%;transform:translateY(8%) scale(1.08);transform-origin:50% 60%;
+  transition:opacity .9s var(--ease),filter 1.6s var(--ease-out),transform 2s var(--ease-out)}
+:root[data-theme="dark"].ready .hero-media .hv-dark{filter:brightness(.4) saturate(.85) blur(3px);transform:translateY(8%) scale(1.12)}
+:root[data-theme="dark"] .hero-media:before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;opacity:0;transition:opacity 1.6s var(--ease-out);
+  background:radial-gradient(55% 48% at 50% 42%,rgba(4,10,19,.75),rgba(4,10,19,.25) 70%,transparent)}
+:root[data-theme="dark"].ready .hero-media:before{opacity:1}
+:root[data-theme="dark"] .hero .lead{background:rgba(4,10,19,.35);border-color:rgba(255,255,255,.08)}
+@media (max-width:900px){:root[data-theme="dark"] .hero-media .hv-dark{transform:none;object-position:center}:root[data-theme="dark"].ready .hero-media .hv-dark{transform:scale(1.04)}}
+@media (max-width:900px){
+  :root[data-theme="dark"] .hero-media:before{opacity:1;background:linear-gradient(180deg,#040A13 0%,rgba(4,10,19,.6) 22%,transparent 45%)}
+  :root[data-theme="dark"].ready .hero-media:before{background:linear-gradient(180deg,#040A13 0%,rgba(4,10,19,.6) 22%,transparent 45%),radial-gradient(60% 40% at 50% 50%,rgba(4,10,19,.5),transparent)}
+}
+
+/* =====================================================================
+   MOBILE: compact, app-like (Swiggy/Zomato), zero horizontal scroll.
+   Everything stacks vertically and reveals on scroll.
+   ===================================================================== */
+html,body{overflow-x:clip}
+form.card{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+form.card label,form.card input,form.card select,form.card textarea{min-width:0}
+@media (max-width:900px){
+  /* kill every horizontal rail → vertical grids */
+  .rail{display:grid!important;overflow:visible!important;margin:0!important;padding:0!important;scroll-snap-type:none!important}
+  .rail>*{flex:none!important;min-width:0}
+  .r6{grid-template-columns:repeat(3,minmax(0,1fr))}.r4{grid-template-columns:repeat(2,minmax(0,1fr))}.r8{grid-template-columns:repeat(4,minmax(0,1fr))}.r3{grid-template-columns:minmax(0,1fr)}
+  .cf-filters{flex-wrap:wrap!important;overflow:visible!important;margin:0!important;padding:0!important}
+}
+@media (max-width:700px){
+  :root{--r:16px}
+  section{padding:44px 0}
+  .wrap{padding:0 16px}
+  .sec-head{margin-bottom:20px}
+  .sec-head h2{font-size:26px;line-height:1.1}
+  .sec-head p{font-size:14px;margin-top:8px}
+  .eyebrow{font-size:10.5px;margin-bottom:8px;gap:8px}.eyebrow:before{width:16px}
+  .more{margin-top:18px}.more .btn{width:100%;padding:13px}
+  .btn{font-size:14px}
+
+  /* hero */
+  .hero h1{font-size:34px;margin:6px 0 12px}
+  .hero .lead{font-size:13.5px;line-height:1.55;margin-bottom:16px}
+  .marquee{padding:12px 0}.marquee span{font-size:17px;gap:28px}.marquee .track{gap:28px}
+
+  /* services: 3-col compact tiles (thumb + title) */
+  #services .r6{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+  #services .card{border-radius:14px;box-shadow:0 1px 2px rgba(12,27,42,.06)}
+  #services .thumb{margin:5px 5px 0;border-radius:10px;aspect-ratio:1/1}
+  #services .card .body{padding:8px 8px 10px}
+  #services .card h3{font-size:12px;line-height:1.25;margin:0;font-family:Inter,sans-serif;font-weight:600;letter-spacing:0}
+  #services .card p,#services .go,#services .num{display:none}
+
+  /* duo */
+  .duo{gap:16px}.duo h2{font-size:26px;margin-bottom:8px}.duo p{font-size:14px;margin-bottom:14px}
+  .duo-media{border-radius:16px}
+  .pills{gap:8px}.pill{padding:10px;gap:6px;border-radius:14px}.pill svg{width:32px;height:32px;padding:7px}.pill b{font-size:14px}.pill span{font-size:11px}
+
+  /* products: list rows */
+  #products .r4{grid-template-columns:minmax(0,1fr);gap:10px}
+  #products .card{flex-direction:row;align-items:center;border-radius:14px}
+  #products .thumb{flex:none;width:92px;height:92px;aspect-ratio:auto;margin:8px;border-radius:12px}
+  #products .card .body{padding:10px 12px 10px 4px}
+  #products .tag{margin-bottom:4px;font-size:10px;padding:2px 8px}
+  #products .card h3{font-size:15px;margin-bottom:2px}
+  #products .card p{font-size:12.5px;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  #products .go{display:none}
+
+  /* automation */
+  .auto-box{border-radius:20px}
+  .auto-txt{padding:170px 18px 16px}.auto-txt h2{font-size:28px}.auto-txt p{font-size:14px;margin-bottom:16px}
+  .auto-list{padding:0 12px 14px;gap:8px}.auto-list li{padding:10px;gap:8px;flex-direction:row;align-items:center;font-size:12.5px;border-radius:12px}
+  .auto-list svg{width:30px;height:30px;padding:6px;flex:none}
+
+  /* industries: Swiggy "what's on your mind" circles */
+  #industries .r8{grid-template-columns:repeat(4,minmax(0,1fr));gap:14px 8px}
+  .ind .ph{aspect-ratio:1/1;border-radius:50%;margin:0 auto 6px;width:100%;max-width:72px;box-shadow:0 4px 12px -4px rgba(12,27,42,.25)}
+  .ind{font-size:11px;line-height:1.25;font-weight:600}
+
+  /* demos */
+  .demos .sec-head{text-align:center}
+  .cf{--cw:84vw}
+  .cf-stage{height:calc(var(--cw) * .75 + 150px)}
+  .cf-cap{padding:10px 6px 12px}.cf-cap h3{font-size:20px}.cf-card.c .cf-cap p{font-size:12.5px;max-height:44px}
+  .cf-card.c .cf-cap .cf-tags{display:none}
+  .cf-arrow{display:grid;top:auto;bottom:-56px;margin:0;width:44px;height:44px;border:1px solid #23415A;border-radius:50%;z-index:70}
+  .cf-arrow svg{width:10px;height:20px}
+  .cf-arrow.prev{left:calc(50% - 54px)}.cf-arrow.next{right:calc(50% - 54px)}
+  .cf-bar{margin-top:70px;justify-content:center}
+  .cf-filters{justify-content:center;gap:6px}.cf-filters button{padding:8px 12px;font-size:10.5px;letter-spacing:.12em}
+
+  /* tech partner bento: compact */
+  .bento{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px}
+  .bx{border-radius:16px}
+  .bx-tall{grid-column:1!important;grid-row:1/3!important;min-height:300px!important}
+  .bx-wide{grid-column:2!important;grid-row:1!important;min-height:146px!important}
+  .bx-split{grid-column:2!important;grid-row:2!important;min-height:146px!important}
+  .bx figcaption{padding:12px}.bx figcaption h3{font-size:14px;margin:0}.bx figcaption p{display:none}.bx figcaption .tag{font-size:9.5px;margin-bottom:4px;padding:2px 7px}
+  .bento .bx-note{grid-column:1/-1!important;grid-row:auto!important;flex-direction:row;align-items:center;gap:12px;padding:12px 14px}
+  .bx-note svg{margin:0;width:36px;height:36px;padding:8px;flex:none}.bx-note b{font-size:14px}.bx-note span{font-size:12.5px}
+  .bx-note>b{min-width:0}
+
+  /* process: no image, tight steps */
+  #process .split-media,#why .split-media{display:none}
+  .steps:before,.steps:after{left:17px;top:18px}
+  .step{padding:8px 0;gap:14px}.step .n{width:36px;height:36px;font-size:12px}.step h3{font-size:15px;margin:6px 0 2px}.step p{display:block;font-size:12.5px}
+
+  /* why: 3-col icon tiles */
+  .why-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+  .why{padding:12px 8px;text-align:center;border-radius:14px}.why svg{width:36px;height:36px;padding:8px;margin:0 auto 6px;display:block}
+  .why h3{font-size:12px;line-height:1.25}.why p{display:none}
+
+  /* testimonials: compact stack */
+  .test{padding:16px;gap:10px;border-radius:16px}.test q{font-size:16px}.who{padding-top:10px}.ava{width:36px;height:36px;font-size:13px}
+
+  /* contact */
+  .inq{gap:12px}.inq-info{padding:20px;border-radius:18px;gap:12px}.inq-info h2{font-size:24px}.inq-info p{font-size:13px}
+  .ci{font-size:13px;gap:10px}
+  form.card{grid-template-columns:minmax(0,1fr);padding:16px;gap:10px;border-radius:18px}
+  input,select,textarea{padding:11px 12px;font-size:16px}textarea{min-height:90px}
+  form .btn{width:100%}
+
+  /* footer: compact */
+  footer{padding:36px 0 104px;font-size:12.5px}
+  .f-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px}
+  footer h4{margin-bottom:10px;font-size:11px}footer ul{gap:7px}
+  .f-brand p{font-size:12.5px}.f-bot{margin-top:22px;padding-top:14px;font-size:11px;flex-direction:column;gap:4px}
+
+  /* sub pages */
+  .page-hero{padding:calc(var(--hdr) + 28px) 0 32px}.page-hero h1{font-size:34px}.page-hero p{font-size:14px;margin-top:12px}
+  .chips{gap:6px;margin-top:18px}.chips a{padding:7px 12px;font-size:12px}
+  .svc{padding:32px 0;gap:14px}.svc-side .thumb{display:none}.svc h2{font-size:24px;margin:6px 0 8px}.svc-side p{font-size:13.5px;margin-bottom:12px}
+  .svc-list{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px}.svc-list li{padding:10px;font-size:12.5px;gap:8px;border-radius:12px;align-items:flex-start;flex-direction:column}
+  .svc-list li span{width:28px;height:28px;font-size:10.5px}
+  .pgrid{gap:10px}.prod{padding:16px;gap:10px;border-radius:18px}.prod h3{font-size:18px}.prod .no{font-size:30px}.prod .ico{width:42px;height:42px;font-size:20px}
+  .prod ul{font-size:13px;gap:5px}.price b{font-size:16px}
+  .cta-band{padding:24px 18px;border-radius:20px}.cta-band h2{font-size:24px}.cta-band .btn{width:100%}
+
+  /* mobile reveal choreography: shorter travel, faster, so everything lands as you scroll */
+  .rv,.rv[data-rv="up"],.rv[data-rv="left"],.rv[data-rv="right"]{transform:translateY(18px)}
+  .rv[data-rv="scale"]{transform:scale(.96);filter:none}
+  .rv{transition-duration:.6s,.6s,.9s,.6s}
+}
+@media (max-width:360px){#services .r6{grid-template-columns:repeat(2,minmax(0,1fr))}.why-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:700px){.bento .bx-note{display:grid;grid-template-columns:36px minmax(0,1fr);column-gap:12px;row-gap:2px;align-items:center}
+  .bx-note svg{grid-row:1/3}.bx-note b,.bx-note span{grid-column:2}}

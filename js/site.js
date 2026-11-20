@@ -83,8 +83,8 @@ links.forEach(a=>{if(a.getAttribute('href')===page)a.classList.add('on')});
 /* ---------- reveal transitions: 50ms stagger, capped at 5 ---------- */
 /* clip-path-hidden (wipe) elements read as invisible to IntersectionObserver, so watch a proxy instead */
 const rvMap=new Map();
-const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;(rvMap.get(e.target)||[]).forEach(el=>el.classList.add('in'));rvMap.delete(e.target);io.unobserve(e.target)}),{threshold:0,rootMargin:'0px 0px -12% 0px'});
-$$('.rv').forEach(el=>{const sib=[...el.parentElement.children].filter(c=>c.classList.contains('rv'));el.style.transitionDelay=Math.min(sib.indexOf(el),5)*50+'ms';
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;(rvMap.get(e.target)||[]).forEach(el=>el.classList.add('in'));rvMap.delete(e.target);io.unobserve(e.target)}),{threshold:0,rootMargin:MOB?'0px 0px -4% 0px':'0px 0px -12% 0px'});
+$$('.rv').forEach(el=>{const sib=[...el.parentElement.children].filter(c=>c.classList.contains('rv'));el.style.transitionDelay=Math.min(sib.indexOf(el),5)*(MOB?40:50)+'ms';
   let t=el;if(el.dataset.rv==='wipe'){t=document.createElement('span');t.style.cssText='position:absolute;inset:0;pointer-events:none;visibility:hidden';
     if(getComputedStyle(el.parentElement).position==='static')el.parentElement.style.position='relative';el.insertAdjacentElement('beforebegin',t);
     const r=el.getBoundingClientRect(),pr=el.parentElement.getBoundingClientRect();Object.assign(t.style,{inset:'auto',left:r.left-pr.left+'px',top:r.top-pr.top+'px',width:r.width+'px',height:r.height+'px'})}
