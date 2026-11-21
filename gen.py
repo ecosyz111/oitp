@@ -98,7 +98,7 @@ PRODUCTS = [
      "₹1,999–₹9,999", "per website", "7–10 days", False),
     ("users", "Mini CRM for Small Businesses", ["Lead tracking", "Sales pipeline", "Automatic follow-up reminders"],
      "₹499–₹2,999", "per month", "7–10 days", False),
-    ("inv", "Smart Billing &amp; Invoice Generator", ["GST invoice generation", "Payment reminders", "Customer and invoice records"],
+    ("inv", "Smart Billing &amp; Invoice Generator", ["Invoice generation", "Payment reminders", "Customer and invoice records"],
      "₹299–₹999", "per month", "5–7 days", False),
     ("cal", "Appointment &amp; Booking System", ["Online booking", "Automated reminders", "Staff availability management"],
      "₹499–₹1,999", "per month", "5–7 days", False),
@@ -126,6 +126,6 @@ prod_body = hero("Products", "Ready-to-use software, <em>live in days.</em>",
                  [("all", "All 10 products"), ("all", "Setup in 3–15 days"), ("all", "Monthly plans from ₹299")])
 prod_body += '\n<section id="all"><div class="wrap"><div class="pgrid">' + "\n".join(cards) + "</div></div></section>\n" + CTA
 open("products.html", "w").write(page("Products | Open Idea: WhatsApp AI, CRM, Billing &amp; More for SMEs",
-                                      "Ready-to-deploy business products for Indian SMEs: WhatsApp AI assistant, AI website builder, CRM, GST billing, booking, inventory and more.",
+                                      "Ready-to-deploy business products for Indian SMEs: WhatsApp AI assistant, AI website builder, CRM, billing, booking, inventory and more.",
                                       prod_body))
 print("ok", total, "services,", len(PRODUCTS), "products")
