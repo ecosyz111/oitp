@@ -21,6 +21,7 @@ def page(title, desc, body):
     h = re.sub(r"<title>.*?</title>", f"<title>{title}</title>", head)
     h = re.sub(r'<meta name="description" content="[^"]*">', f'<meta name="description" content="{desc}">', h)
     h = re.sub(r'<meta property="og:title" content="[^"]*">', f'<meta property="og:title" content="{title}">', h)
+    h = re.sub(r'<meta property="og:description" content="[^"]*">', f'<meta property="og:description" content="{desc}">', h)
     h = h.replace('<link rel="preload" as="image" href="media/hero-1-poster.webp" fetchpriority="high">\n', "")
     h = re.sub(r'<script type="application/ld\+json">\{"@context": "https://schema.org", "@type": "FAQPage".*?</script>\n?', "", h, flags=re.S)  # FAQ lives on the home page only
     return (f"{h}</head>\n<body>\n{icons}\n"
@@ -181,3 +182,5 @@ open("products.html", "w").write(page("Products | Open Idea: WhatsApp AI, CRM, B
                                       "Ready-to-deploy business products for Indian SMEs: WhatsApp AI assistant, AI website builder, CRM, billing, booking, inventory and more.",
                                       prod_body))
 print("ok", total, "services,", len(PRODUCTS), "products")
+
+exec(open("sp.py").read())

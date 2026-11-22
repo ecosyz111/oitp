@@ -1,0 +1,23 @@
+# Open Idea (Tech Partner)
+
+> Open Idea is a DPIIT-recognised, AIC-GBU incubated tech partner based in Greater Noida West, Uttar Pradesh, India. It builds websites, startup MVPs, business software, CRM, WhatsApp AI chatbots and AI automation for small and medium businesses (SMEs) and startups across India. Legal entity: Ecosyz Core Solutions Private Limited.
+
+Key facts:
+- Location: 8125, 8th Floor, Gaur City Mall Office Space, Sector 4, Greater Noida West, Uttar Pradesh 201318, India. Serves Noida, Greater Noida, Delhi NCR and clients across India (mostly online).
+- Contact: WhatsApp / phone +91 81302 96940, email info@openidea.world
+- Business websites start from ₹25,000 and usually go live in 2–5 days; first draft in 24–48 hours.
+- 75+ services across websites, MVPs, software, AI automation, digital marketing, integrations and branding.
+- Languages: English and Hindi. Clients own their domain, website and code.
+
+## Core services
+- [Website Development](https://techpartner.openidea.co.in/website-development.html): mobile-first business websites with WhatsApp, booking, payments and SEO; live in 2–5 days.
+- [WhatsApp AI Chatbot](https://techpartner.openidea.co.in/whatsapp-ai-chatbot.html): 24×7 AI assistant on the official WhatsApp Business API for leads, FAQs and bookings; setup in 3–7 days.
+- [AI Automation](https://techpartner.openidea.co.in/ai-automation.html): custom AI agents, AI voice agents, RAG chatbots, document processing and n8n / Make / Zapier workflows; 2–14 days.
+- [Startup MVP Development](https://techpartner.openidea.co.in/mvp-development.html): AI-wrapper SaaS MVPs in 1–3 weeks, no-code MVPs in 1–2 weeks, prototypes in 3–5 days.
+- [CRM Software](https://techpartner.openidea.co.in/crm-software.html): HubSpot / Zoho setup or a custom CRM with WhatsApp and ad leads flowing in; 3–5 days.
+
+## More
+- [All services](https://techpartner.openidea.co.in/services.html): full list of 75+ services, including fast-track packages with timelines.
+- [Products](https://techpartner.openidea.co.in/products.html): ready-to-use software for SMEs (WhatsApp AI assistant, mini CRM, billing, booking, inventory and more).
+- [Home and FAQ](https://techpartner.openidea.co.in/): overview, reviews, case study and 16 common questions answered.
+- [Main website](https://openidea.co.in)

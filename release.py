@@ -7,13 +7,14 @@
 
 Usage: python3 release.py [path/to/esbuild]
 """
+import os
 import hashlib
 import re
 import subprocess
 import sys
 
 ESBUILD = sys.argv[1] if len(sys.argv) > 1 else "esbuild"
-PAGES = ["index.html", "services.html", "products.html"]
+PAGES = sorted(f for f in os.listdir(".") if f.endswith(".html") and f not in ("index.orig.html", "template.html", "partials_icons.html") and not f.startswith("google"))
 
 subprocess.run([sys.executable, "gen.py"], check=True)
 subprocess.run([ESBUILD, "css/site.css", "--minify", "--outfile=css/site.min.css", "--log-level=warning"], check=True)

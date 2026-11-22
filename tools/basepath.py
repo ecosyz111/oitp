@@ -19,7 +19,8 @@ SKIP = {".git", "tools", "node_modules"}
 shutil.rmtree(out, ignore_errors=True)
 shutil.copytree(src, out, ignore=lambda d, names: [n for n in names if n in SKIP])
 
-PAGES = {"index.html": "", "services.html": "services.html", "products.html": "products.html"}
+PAGES = {n: ("" if n == "index.html" else n) for n in sorted(os.listdir(out))
+         if n.endswith(".html") and not n.startswith("google")}
 ATTR = re.compile(r'\b(src|href|poster|data-src|data-src-m|data-poster)="([^"]*)"')
 
 
