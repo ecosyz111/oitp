@@ -7,6 +7,7 @@ icons = re.search(r'<svg width="0".*?</svg>', idx, re.S).group(0)
 header = re.search(r"<header.*?</header>", idx, re.S).group(0)
 footer = re.search(r"<footer>.*?</footer>", idx, re.S).group(0)
 appbar = re.search(r'<nav class="appbar".*?</nav>', idx, re.S).group(0)
+wafab = re.search(r'<a class="wa-fab".*?</a>', idx, re.S).group(0)
 
 
 def rel(html):
@@ -22,7 +23,7 @@ def page(title, desc, body):
     return (f"{h}</head>\n<body>\n{icons}\n"
             '<div class="progress" id="progress" aria-hidden="true"></div>\n'
             '<div class="pt" aria-hidden="true"><img src="img/logo.webp" alt=""></div>\n'
-            f"{rel(header)}\n<main>\n{body}\n</main>\n{rel(footer)}\n{rel(appbar)}\n"
+            f"{rel(header)}\n<main>\n{body}\n</main>\n{rel(footer)}\n{wafab}\n{rel(appbar)}\n"
             '<script src="js/site.js" defer></script>\n</body>\n</html>\n')
 
 

@@ -1,3 +1,9 @@
+/* =====================================================================
+   TRACKING: paste IDs here when the ad accounts are ready. Empty = off.
+   metaPixel: "1234567890" · ga4: "G-XXXXXXX" · googleAds: "AW-XXXXXXX/label"
+   ===================================================================== */
+const TRACK = { metaPixel: "", ga4: "", googleAds: "" };
+
 /* Hero: light hands video in light theme, dark hands video in dark theme.
    Hero copy fades in when the hands touch (data-reveal seconds on each <video>). */
 
@@ -95,7 +101,7 @@ $$('.rv').forEach(el=>{const sib=[...el.parentElement.children].filter(c=>c.clas
 if(!MOB)$$('.card,.prod').forEach(c=>c.addEventListener('pointermove',e=>{const r=c.getBoundingClientRect();c.style.setProperty('--mx',e.clientX-r.left+'px');c.style.setProperty('--my',e.clientY-r.top+'px')}));
 
 /* ---------- counters (ease-out) ---------- */
-const co=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;co.unobserve(e.target);const el=e.target,n=+el.dataset.count,suf=el.dataset.suf||'+',t0=performance.now(),D=1400;
+const co=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;co.unobserve(e.target);const el=e.target,n=+el.dataset.count,suf=('suf' in el.dataset)?el.dataset.suf:'+',t0=performance.now(),D=1400;
   (function f(t){const p=Math.min(1,(t-t0)/D),v=Math.round(n*(1-Math.pow(1-p,4)));el.textContent=v+suf;if(p<1)requestAnimationFrame(f)})(t0)}));
 window.startCounters=()=>setTimeout(()=>$$('[data-count]').forEach(el=>{co.unobserve(el);co.observe(el)}),1300);
 if(!HOME||RM||root.classList.contains('ready'))startCounters();
@@ -113,11 +119,34 @@ if(!HOME||RM||root.classList.contains('ready'))startCounters();
 $$('[data-service]').forEach(b=>b.addEventListener('click',()=>{const sel=$('#inq select[name=service]');if(!sel)return;
   const o=[...sel.options].find(o=>o.text===b.dataset.service);if(o)sel.value=o.value}));
 
-/* ---------- enquiry form → mailto ---------- */
+/* ---------- ad attribution: remember utm/gclid/fbclid for this visit ---------- */
+const ATTR=(()=>{const k='oi-utm';let v={};try{v=JSON.parse(sessionStorage.getItem(k)||'{}')}catch(e){}
+  const q=new URLSearchParams(location.search);['utm_source','utm_medium','utm_campaign','utm_term','utm_content','gclid','fbclid'].forEach(n=>{if(q.get(n))v[n]=q.get(n)});
+  if(!v.landing)v.landing=location.pathname;if(!v.ref&&document.referrer&&!document.referrer.includes(location.host))v.ref=document.referrer;
+  try{sessionStorage.setItem(k,JSON.stringify(v))}catch(e){}return v})();
+const srcLine=()=>{const s=[ATTR.utm_source,ATTR.utm_medium,ATTR.utm_campaign].filter(Boolean).join(' / ');return s?`\n(Source: ${s})`:''};
+/* booking links carry the ad source to openidea.co.in/form */
+$$('a[data-lead="book"]').forEach(a=>{try{const u=new URL(a.href);Object.entries(ATTR).forEach(([k,v])=>{if(/^(utm_|gclid|fbclid)/.test(k))u.searchParams.set(k,v)});if(!u.searchParams.get('utm_source'))u.searchParams.set('utm_source','techpartner');a.href=u.toString()}catch(e){}});
+/* WhatsApp links mention the ad source */
+$$('a[href*="wa.me/"]').forEach(a=>{const add=srcLine();if(!add)return;try{const u=new URL(a.href);u.searchParams.set('text',(u.searchParams.get('text')||'')+add);a.href=u.toString()}catch(e){}});
+
+/* ---------- lead events (Meta Pixel / GA4 / Google Ads, only if IDs are set) ---------- */
+function track(kind){try{if(window.fbq)fbq('track',kind==='book'?'Lead':'Contact');if(window.gtag){gtag('event',kind==='book'?'generate_lead':'contact',{method:kind});if(TRACK.googleAds)gtag('event','conversion',{send_to:TRACK.googleAds})}}catch(e){}}
+document.addEventListener('click',e=>{const a=e.target.closest('[data-lead],a[href*="wa.me/"],a[href^="tel:"]');if(!a)return;track(a.dataset.lead||(a.href.includes('wa.me')?'whatsapp':'call'))},true);
+(function loadTags(){const go=()=>{
+  if(TRACK.metaPixel){!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init',TRACK.metaPixel);fbq('track','PageView')}
+  const gid=TRACK.ga4||(TRACK.googleAds||'').split('/')[0];
+  if(gid){const sc=document.createElement('script');sc.async=true;sc.src='https://www.googletagmanager.com/gtag/js?id='+gid;document.head.appendChild(sc);window.dataLayer=window.dataLayer||[];window.gtag=function(){dataLayer.push(arguments)};gtag('js',new Date());if(TRACK.ga4)gtag('config',TRACK.ga4);if(TRACK.googleAds)gtag('config',TRACK.googleAds.split('/')[0])}};
+  document.readyState==='complete'?setTimeout(go,0):addEventListener('load',go,{once:true})})();
+
+/* ---------- enquiry form → straight to our WhatsApp (works on every phone) ---------- */
 const inq=$('#inq');if(inq)inq.onsubmit=e=>{e.preventDefault();const f=new FormData(e.target),name=f.get('name').trim(),phone=f.get('phone').trim();
  if(!name||!phone){e.target.reportValidity();return}
- const body=`Name: ${name}\nPhone: ${phone}\nEmail: ${f.get('email')}\nInterested in: ${f.get('service')}\n\n${f.get('msg')}`;
- location.href=`mailto:info@openidea.world?subject=${encodeURIComponent('Website enquiry: '+f.get('service'))}&body=${encodeURIComponent(body)}`};
+ const lines=[`Hi Open Idea! New enquiry from the website.`,``,`Name: ${name}`,`Phone: ${phone}`];
+ if(f.get('email'))lines.push(`Email: ${f.get('email')}`);lines.push(`Interested in: ${f.get('service')}`);if((f.get('msg')||'').trim())lines.push(``,`${f.get('msg').trim()}`);
+ const url='https://wa.me/918130296940?text='+encodeURIComponent(lines.join('\n')+srcLine());track('form');
+ const w=window.open(url,'_blank');if(w){try{w.opener=null}catch(_){}}else location.href=url;
+ const btn=e.target.querySelector('button[type=submit]');btn.innerHTML='Opening WhatsApp… <svg class="i"><use href="#send"/></svg>';setTimeout(()=>{btn.innerHTML='Send on WhatsApp <svg class="i"><use href="#send"/></svg>'},4000)};
 
 /* =====================================================================
    PREMIUM LAYER: Lenis smooth scroll + GSAP ScrollTrigger, ONE ticker.

@@ -887,3 +887,54 @@ form.card label,form.card input,form.card select,form.card textarea{min-width:0}
   .st-case-in{padding:18px}.st-case h3{font-size:30px;margin-top:10px}.st-case p:not(.st-kind){font-size:13px}
   .st-cta{padding:16px;gap:12px;margin-top:14px}.st-cta p{font-size:13.5px}.st-cta .btn{width:100%}
 }
+
+/* ================= WhatsApp floating button ================= */
+.wa-fab{position:fixed;right:22px;bottom:22px;z-index:75;display:flex;align-items:center;gap:0;height:58px;min-width:58px;padding:0 15px;border-radius:999px;
+  background:#25D366;color:#fff;box-shadow:0 12px 28px -8px rgba(18,140,75,.6),0 2px 6px rgba(0,0,0,.12);
+  opacity:0;transform:translateY(16px) scale(.85);animation:waIn .6s 1.2s var(--ease-out) forwards;transition:box-shadow .3s,background .3s}
+.wa-ico{width:28px;height:28px;flex:none}
+.wa-txt{max-width:0;overflow:hidden;white-space:nowrap;font-weight:600;font-size:14.5px;opacity:0;transition:max-width .45s var(--ease-out),opacity .3s,margin .45s var(--ease-out)}
+.wa-fab:hover{background:#1ebe5b;box-shadow:0 16px 34px -8px rgba(18,140,75,.7)}
+.wa-fab:hover .wa-txt,.wa-fab:focus-visible .wa-txt{max-width:180px;opacity:1;margin-left:10px}
+.wa-fab:focus-visible{outline:3px solid #0C1B2A;outline-offset:3px}
+.wa-fab:before{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:0 0 0 0 rgba(37,211,102,.55);animation:waRing 2.4s 2s 2 ease-out}
+@keyframes waIn{to{opacity:1;transform:none}}
+@keyframes waRing{0%{box-shadow:0 0 0 0 rgba(37,211,102,.55)}100%{box-shadow:0 0 0 16px rgba(37,211,102,0)}}
+@media (max-width:900px){
+  .wa-fab{right:14px;bottom:calc(96px + env(safe-area-inset-bottom));height:52px;min-width:52px;padding:0 12px}
+  .wa-ico{width:26px;height:26px}
+}
+@media (prefers-reduced-motion:reduce){.wa-fab{opacity:1;transform:none;animation:none}.wa-fab:before{animation:none}}
+
+/* ================= conversion bits ================= */
+.offer{margin-top:16px;font-size:13.5px;color:var(--muted);display:flex;flex-wrap:wrap;justify-content:center;gap:4px 10px}
+.offer b{color:var(--text);font-weight:700}.offer .sep{opacity:.4}
+:root[data-theme="dark"] .hero .offer{color:#B9C8D6}:root[data-theme="dark"] .hero .offer b{color:#fff}
+.btn-wa svg.i{width:20px;height:20px;color:#25D366}
+.trust{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin:-18px auto 28px}
+.trust span{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;background:var(--card);border:1px solid var(--border);font-size:13px;font-weight:600;box-shadow:var(--shadow)}
+.trust svg{color:var(--primary-d);font-size:16px}
+.faq-wrap{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:48px;align-items:start}
+.faq-wa{color:var(--primary-d);font-weight:600;text-decoration:underline;text-underline-offset:3px}
+.faq{display:grid;gap:10px}
+.faq details{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:border-color .3s,box-shadow .3s}
+.faq details[open]{border-color:color-mix(in srgb,var(--primary) 45%,var(--border));box-shadow:var(--shadow)}
+.faq summary{list-style:none;cursor:pointer;padding:18px 54px 18px 20px;font-weight:600;font-size:15.5px;position:relative}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary:after{content:"";position:absolute;right:20px;top:50%;width:12px;height:12px;margin-top:-8px;border-right:2px solid var(--primary-d);border-bottom:2px solid var(--primary-d);transform:rotate(45deg);transition:transform .35s var(--ease-out),margin .35s}
+.faq details[open] summary:after{transform:rotate(225deg);margin-top:-2px}
+.faq details p{padding:0 20px 18px;color:var(--muted);font-size:14.5px}
+.faq details[open] p{animation:faqIn .4s var(--ease-out)}
+@keyframes faqIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.f-legal{display:flex;gap:16px;flex-wrap:wrap}.f-legal a:hover{color:var(--accent)}
+@media (max-width:900px){.faq-wrap{grid-template-columns:minmax(0,1fr);gap:18px}}
+@media (max-width:700px){
+  .offer{font-size:11.5px;margin-top:10px;gap:2px 6px}.offer .offer-slot{flex-basis:100%;text-align:center}
+  .trust{margin:-6px 0 16px;gap:6px}.trust span{font-size:11px;padding:6px 10px;gap:6px}
+  .faq summary{padding:14px 44px 14px 14px;font-size:14px}.faq summary:after{right:16px;width:10px;height:10px}.faq details p{padding:0 14px 14px;font-size:13px}
+  .media-ctl{right:auto;left:14px}
+  .f-legal{gap:10px}
+}
+.hero .offer{display:inline-flex;padding:8px 16px;border-radius:999px;background:rgba(255,255,255,.66);backdrop-filter:blur(12px) saturate(1.2);-webkit-backdrop-filter:blur(12px) saturate(1.2);border:1px solid rgba(255,255,255,.8);box-shadow:0 8px 24px -12px rgba(12,27,42,.2);color:#3E4E62}
+:root[data-theme="dark"] .hero .offer{background:rgba(4,10,19,.55);border-color:rgba(255,255,255,.1);box-shadow:none}
+@media (max-width:700px){.hero .offer{background:none;border:0;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;padding:0}}
