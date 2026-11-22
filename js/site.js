@@ -2,7 +2,7 @@
    TRACKING: paste IDs here when the ad accounts are ready. Empty = off.
    metaPixel: "1234567890" · ga4: "G-XXXXXXX" · googleAds: "AW-XXXXXXX/label"
    ===================================================================== */
-const TRACK = { metaPixel: "2233429150725239", ga4: "", googleAds: "AW-870594294/hCgGCMiktr0dEPbtkJ8D" };
+const TRACK = { metaPixel: "2233429150725239", ga4: "G-ZC3Q8LQPBS", googleAds: "AW-870594294/hCgGCMiktr0dEPbtkJ8D" };
 
 /* Hero: light hands video in light theme, dark hands video in dark theme.
    Hero copy fades in when the hands touch (data-reveal seconds on each <video>). */

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://techpartner.openidea.co.in/sitemap.xml
