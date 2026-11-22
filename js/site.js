@@ -5,6 +5,7 @@ const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],roo
   ic=n=>`<svg class="i"><use href="#${n}"/></svg>`,RM=matchMedia('(prefers-reduced-motion:reduce)').matches,
   MOB=matchMedia('(max-width:900px)').matches,HOME=!!$('#home.hero');
 const G=()=>window.gsap&&window.ScrollTrigger;
+const norm=p=>p.replace(/index\.html$/,'').replace(/\/+$/,'')||'/';   /* /techpartner == /techpartner/ == /techpartner/index.html */
 
 /* ---------- theme: light default, circular wipe from the toggle ---------- */
 const tb=$('#theme'),setIcon=()=>tb&&(tb.innerHTML=ic(root.dataset.theme==='dark'?'sun':'moon'));
@@ -76,10 +77,9 @@ addEventListener('scroll',onScroll,{passive:true});onScroll();
 
 /* ---------- active nav ---------- */
 const links=$$('.menu a,.appbar a');
-const so=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)links.forEach(a=>{const h=a.getAttribute('href');a.classList.toggle('on',h==='#'+e.target.id||h==='index.html#'+e.target.id)})}),{rootMargin:'-45% 0px -50% 0px'});
+const so=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)links.forEach(a=>{const u=new URL(a.href,location.href);a.classList.toggle('on',u.hash==='#'+e.target.id&&norm(u.pathname)===norm(location.pathname))})}),{rootMargin:'-45% 0px -50% 0px'});
 $$('main section[id]').forEach(s=>so.observe(s));
-const page=location.pathname.split('/').pop()||'index.html';
-links.forEach(a=>{if(a.getAttribute('href')===page)a.classList.add('on')});
+links.forEach(a=>{const u=new URL(a.href,location.href);if(!u.hash&&norm(u.pathname)===norm(location.pathname)&&!/index\.html$|\/$/.test(u.pathname))a.classList.add('on')});
 
 /* ---------- reveal transitions: 50ms stagger, capped at 5 ---------- */
 /* clip-path-hidden (wipe) elements read as invisible to IntersectionObserver, so watch a proxy instead */
@@ -104,7 +104,7 @@ if(!HOME||RM||root.classList.contains('ready'))startCounters();
 (()=>{const pt=$('.pt');if(!pt||RM)return;
   try{if(sessionStorage.getItem('oi-pt')){sessionStorage.removeItem('oi-pt');pt.classList.add('in');setTimeout(()=>pt.classList.remove('in'),800)}}catch(e){}
   document.addEventListener('click',e=>{const a=e.target.closest('a');if(!a||e.metaKey||e.ctrlKey||a.target==='_blank')return;
-    const u=new URL(a.href,location.href);if(u.origin!==location.origin||u.pathname===location.pathname||/^(tel|mailto):/.test(a.href))return;
+    const u=new URL(a.href,location.href);if(u.origin!==location.origin||norm(u.pathname)===norm(location.pathname)||/^(tel|mailto):/.test(a.href))return;
     e.preventDefault();try{sessionStorage.setItem('oi-pt',1)}catch(_){};pt.classList.add('out');setTimeout(()=>location.href=a.href,430)});
   addEventListener('pageshow',e=>{if(e.persisted)pt.classList.remove('out','in')});
 })();
