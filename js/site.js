@@ -109,6 +109,10 @@ if(!HOME||RM||root.classList.contains('ready'))startCounters();
   addEventListener('pageshow',e=>{if(e.persisted)pt.classList.remove('out','in')});
 })();
 
+/* ---------- CTAs that pre-select a service in the enquiry form ---------- */
+$$('[data-service]').forEach(b=>b.addEventListener('click',()=>{const sel=$('#inq select[name=service]');if(!sel)return;
+  const o=[...sel.options].find(o=>o.text===b.dataset.service);if(o)sel.value=o.value}));
+
 /* ---------- enquiry form → mailto ---------- */
 const inq=$('#inq');if(inq)inq.onsubmit=e=>{e.preventDefault();const f=new FormData(e.target),name=f.get('name').trim(),phone=f.get('phone').trim();
  if(!name||!phone){e.target.reportValidity();return}
