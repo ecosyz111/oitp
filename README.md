@@ -14,8 +14,8 @@ The hero has one hands video per theme: `.hv-light` and `.hv-dark` in `index.htm
 ## Release
 `python3 release.py path/to/esbuild` (regenerates sub pages, minifies, versions assets). `vercel.json` sets long cache headers.
 
-## Lives at openidea.co.in/techpartner
-The Vercel build runs `tools/basepath.py`, which writes the site to `public/techpartner/` with absolute `/techpartner/...` paths and a canonical URL on openidea.co.in. The main openidea.co.in app proxies `/techpartner` here with a rewrite.
+## Lives at techpartner.openidea.co.in
+The Vercel build runs `tools/basepath.py SRC public / https://techpartner.openidea.co.in`, which copies the site to `public/` with absolute paths and canonical URLs on techpartner.openidea.co.in.
 
 ## Deploy (Vercel)
 Vercel project `open-idea` builds by downloading this repo at a pinned commit into `public/`.
