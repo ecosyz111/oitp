@@ -36,7 +36,7 @@
 "address":{"@type":"PostalAddress","streetAddress":"8125, 8th Floor, Gaur City Mall Office Space, Sector 4","addressLocality":"Greater Noida West","addressRegion":"Uttar Pradesh","postalCode":"201318","addressCountry":"IN"},
 "areaServed":"IN","sameAs":["https://openidea.co.in","https://www.linkedin.com/company/ecosyz/","https://www.instagram.com/openidea.ai_platform/","https://x.com/OpenIdeaOrg"]}
 </script>
-<link rel="stylesheet" href="css/site.min.css?v=bd02e759">
+<link rel="stylesheet" href="css/site.min.css?v=b3436ef2">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How much does a website cost?", "acceptedAnswer": {"@type": "Answer", "text": "Business websites start from ₹25,000. The final price depends on the pages and features you need (booking, payments, WhatsApp, catalogue), and you get a clear quote before work starts."}}, {"@type": "Question", "name": "How fast can my website go live?", "acceptedAnswer": {"@type": "Answer", "text": "Most business websites go live in 2–5 days. After you book, the first draft reaches you in 24–48 hours."}}, {"@type": "Question", "name": "Do you build apps and MVPs for startups?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Web apps, mobile apps or both, with logins, dashboards, payments and admin panels. Bigger products are scoped with you before we quote."}}, {"@type": "Question", "name": "Can you add WhatsApp, booking or payments to my site?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. WhatsApp chat, enquiry forms, Google Maps, online booking and payment gateways are all things we set up regularly."}}, {"@type": "Question", "name": "Do you help after the website is live?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. We offer ongoing support and updates, and can add software, AI automation or marketing as your business grows."}}]}</script>
 </head>
 <body>
@@ -95,7 +95,7 @@
   </nav>
   <div class="nav-r">
    <button class="tbtn" id="theme" aria-label="Switch light or dark theme"><svg class="i"><use href="#moon"/></svg></button>
-   <a href="https://openidea.co.in/form" class="btn btn-p" data-lead="book">Start Your Project <svg class="i"><use href="#arrow"/></svg></a>
+   <a href="#contact" class="btn btn-p">Start Your Project <svg class="i"><use href="#arrow"/></svg></a>
   </div>
  </div>
 </header>
@@ -117,7 +117,7 @@
     <h1 id="heroTitle">Your Business. Our Technology.<br class="br"> <em>A Smarter Future.</em></h1>
     <p class="lead fx" style="--d:2.25s"><span class="lead-full">Open Idea brings <strong>AI-powered business solutions</strong> to small and medium businesses in India: custom websites, business software, CRM, WhatsApp AI assistants and digital marketing that help you build, automate and grow.</span><span class="lead-short"><strong>AI-powered</strong> websites, software &amp; automation for growing businesses in India.</span></p>
     <div class="ctas fx" style="--d:2.45s">
-     <a href="https://openidea.co.in/form" class="btn btn-p" data-lead="book">Start Your Project <svg class="i"><use href="#arrow"/></svg></a>
+     <a href="#contact" class="btn btn-p">Start Your Project <svg class="i"><use href="#arrow"/></svg></a>
      <a href="https://wa.me/918130296940?text=Hi%20Open%20Idea!%20I%27d%20like%20to%20know%20more%20about%20your%20services." class="btn btn-o btn-wa" target="_blank" rel="noopener" data-lead="whatsapp"><svg class="i" viewBox="0 0 32 32" aria-hidden="true" style="fill:currentColor;stroke:none"><path d="M16.04 3C9 3 3.3 8.7 3.3 15.73c0 2.25.6 4.45 1.72 6.38L3.2 28.8l6.86-1.8a12.7 12.7 0 0 0 5.98 1.52c7.03 0 12.74-5.7 12.74-12.74 0-3.4-1.33-6.6-3.73-9A12.66 12.66 0 0 0 16.04 3Zm5.8 15.42c-.32-.16-1.88-.93-2.17-1.03-.29-.11-.5-.16-.71.16-.21.32-.82 1.03-1 1.24-.18.21-.37.24-.69.08-.32-.16-1.34-.5-2.55-1.58a9.57 9.57 0 0 1-1.77-2.2c-.18-.32-.02-.49.14-.65.14-.14.32-.37.48-.56.16-.18.21-.32.32-.53.1-.21.05-.4-.03-.56-.08-.16-.71-1.71-.98-2.35-.26-.62-.52-.53-.71-.54h-.61c-.21 0-.56.08-.85.4-.29.32-1.11 1.09-1.11 2.65s1.14 3.08 1.3 3.29c.16.21 2.24 3.42 5.43 4.8 2.66 1.15 3.2.92 3.81.86.61-.06 1.88-.77 2.14-1.51.27-.74.27-1.38.19-1.51-.08-.13-.29-.21-.61-.37Z"/></svg> WhatsApp Us</a>
     </div>
    </div>
@@ -359,19 +359,27 @@
    <div class="ci"><svg class="i"><use href="#pin"/></svg><span>8125, 8th Floor, Gaur City Mall Office Space, Sector 4, Greater Noida West, Gautam Buddha Nagar, Uttar Pradesh 201318</span></div>
   </div>
   <form class="card rv" data-rv="right" id="inq" novalidate>
+   <fieldset class="full ptype">
+    <legend>What are we building?</legend>
+    <label class="pt-opt"><input type="radio" name="ptype" value="Hobby / Personal"><span><b>Hobby / Personal</b><small>1–4 pages · live in 3–5 days</small></span></label>
+    <label class="pt-opt"><input type="radio" name="ptype" value="Business Website" checked><span><b>Business Website</b><small>WhatsApp, maps &amp; booking · live in 5 days</small></span></label>
+    <label class="pt-opt"><input type="radio" name="ptype" value="Bigger MVP / Product"><span><b>MVP / Product</b><small>Web or mobile app, auth, payments · scoped first</small></span></label>
+   </fieldset>
    <label>Full name<input name="name" required autocomplete="name" placeholder="Your name"></label>
    <label>Phone<input name="phone" type="tel" required autocomplete="tel" placeholder="+91"></label>
-   <label class="full">Email<input name="email" type="email" autocomplete="email" placeholder="you@company.com"></label>
+   <label>Email<input name="email" type="email" autocomplete="email" placeholder="you@company.com"></label>
+   <label>Business / brand<input name="biz" autocomplete="organization" placeholder="e.g. Sharma Sweets"></label>
    <label class="full">I'm interested in
     <select name="service">
      <option>Website Development</option><option>Startup MVP / App</option><option>Business Software / CRM</option><option>WhatsApp AI Assistant</option>
      <option>AI Automation</option><option>Digital Marketing &amp; SEO</option><option>Branding &amp; Design</option><option>Something else</option>
     </select>
    </label>
-   <label class="full">Message<textarea name="msg" placeholder="Tell us about your business and what you need"></textarea></label>
+   <label class="full">Tell us a little<textarea name="msg" placeholder="What does your business do, and what should this build achieve?"></textarea></label>
+   <ol class="full nxt"><li><b>1</b>Send details</li><li><b>2</b>Quick call on WhatsApp</li><li><b>3</b>First draft in 24–48 hrs</li><li><b>4</b>Share the full brief</li></ol>
    <div class="full" style="display:flex;gap:14px;align-items:center;flex-wrap:wrap">
-    <button class="btn btn-p" type="submit">Send on WhatsApp <svg class="i"><use href="#send"/></svg></button>
-    <span class="form-note">Sends your details to us on WhatsApp. Prefer to book directly? <a href="https://openidea.co.in/form" data-lead="book">Book your slot</a>.</span>
+    <button class="btn btn-p" type="submit">Start on WhatsApp <svg class="i"><use href="#send"/></svg></button>
+    <span class="form-note">We reply within one working day.</span>
    </div>
   </form>
  </div>
@@ -420,6 +428,6 @@
  <a href="tel:+918130296940"><svg class="i"><use href="#phone"/></svg>Call</a>
 </nav>
 
-<script src="js/site.min.js?v=eea67538" defer></script>
+<script src="js/site.min.js?v=d54e9f69" defer></script>
 </body>
 </html>

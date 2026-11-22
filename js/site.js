@@ -130,7 +130,7 @@ const ATTR=(()=>{const k='oi-utm';let v={};try{v=JSON.parse(sessionStorage.getIt
   if(!v.landing)v.landing=location.pathname;if(!v.ref&&document.referrer&&!document.referrer.includes(location.host))v.ref=document.referrer;
   try{sessionStorage.setItem(k,JSON.stringify(v))}catch(e){}return v})();
 const srcLine=()=>{const s=[ATTR.utm_source,ATTR.utm_medium,ATTR.utm_campaign].filter(Boolean).join(' / ');return s?`\n(Source: ${s})`:''};
-/* booking links carry the ad source to openidea.co.in/form */
+/* booking links carry the ad source */
 $$('a[data-lead="book"]').forEach(a=>{try{const u=new URL(a.href);Object.entries(ATTR).forEach(([k,v])=>{if(/^(utm_|gclid|fbclid)/.test(k))u.searchParams.set(k,v)});if(!u.searchParams.get('utm_source'))u.searchParams.set('utm_source','techpartner');a.href=u.toString()}catch(e){}});
 /* WhatsApp links mention the ad source */
 $$('a[href*="wa.me/"]').forEach(a=>{const add=srcLine();if(!add)return;try{const u=new URL(a.href);u.searchParams.set('text',(u.searchParams.get('text')||'')+add);a.href=u.toString()}catch(e){}});
@@ -148,7 +148,7 @@ document.addEventListener('click',e=>{const a=e.target.closest('[data-lead],a[hr
 const inq=$('#inq');if(inq)inq.onsubmit=e=>{e.preventDefault();const f=new FormData(e.target),name=f.get('name').trim(),phone=f.get('phone').trim();
  if(!name||!phone){e.target.reportValidity();return}
  const lines=[`Hi Open Idea! New enquiry from the website.`,``,`Name: ${name}`,`Phone: ${phone}`];
- if(f.get('email'))lines.push(`Email: ${f.get('email')}`);lines.push(`Interested in: ${f.get('service')}`);if((f.get('msg')||'').trim())lines.push(``,`${f.get('msg').trim()}`);
+ if(f.get('email'))lines.push(`Email: ${f.get('email')}`);if((f.get('biz')||'').trim())lines.push(`Business: ${f.get('biz').trim()}`);if(f.get('ptype'))lines.push(`Project: ${f.get('ptype')}`);lines.push(`Interested in: ${f.get('service')}`);if((f.get('msg')||'').trim())lines.push(``,`${f.get('msg').trim()}`);
  const url='https://wa.me/918130296940?text='+encodeURIComponent(lines.join('\n')+srcLine());track('form');
  const w=window.open(url,'_blank');if(w){try{w.opener=null}catch(_){}}else location.href=url;
  const btn=e.target.querySelector('button[type=submit]');btn.innerHTML='Opening WhatsApp… <svg class="i"><use href="#send"/></svg>';setTimeout(()=>{btn.innerHTML='Send on WhatsApp <svg class="i"><use href="#send"/></svg>'},4000)};
