@@ -1,5 +1,7 @@
 """Generate sub pages (services.html, products.html) from index.html's shared shell."""
+import html
 import re
+from urllib.parse import quote
 
 idx = open("index.html").read()
 head = idx[: idx.index("</head>")]
@@ -20,6 +22,7 @@ def page(title, desc, body):
     h = re.sub(r'<meta name="description" content="[^"]*">', f'<meta name="description" content="{desc}">', h)
     h = re.sub(r'<meta property="og:title" content="[^"]*">', f'<meta property="og:title" content="{title}">', h)
     h = h.replace('<link rel="preload" as="image" href="media/hero-1-poster.webp" fetchpriority="high">\n', "")
+    h = re.sub(r'<script type="application/ld\+json">\{"@context": "https://schema.org", "@type": "FAQPage".*?</script>\n?', "", h, flags=re.S)  # FAQ lives on the home page only
     return (f"{h}</head>\n<body>\n{icons}\n"
             '<div class="progress" id="progress" aria-hidden="true"></div>\n'
             '<div class="pt" aria-hidden="true"><img src="img/logo.webp" alt=""></div>\n'
@@ -120,11 +123,11 @@ for n, (ico, name, feats, price, unit, live, hot) in enumerate(PRODUCTS, 1):
     cards.append(f'''<article class="prod{' hot' if hot else ''} rv"{' data-rv="scale"' if hot else ''}>{'<span class="ribbon">MOST POPULAR</span>' if hot else ''}
    <div class="prod-top"><span class="ico"><svg class="i"><use href="#{ico}"/></svg></span><span class="no">{n:02d}</span></div>
    <h3>{name}</h3><ul>{li}</ul>
-   <div class="prod-meta"><div class="price"><small>Starting at</small><b>{price}</b> <i>{unit}</i></div><span class="live">Live in {live}</span></div>
+   <div class="prod-meta"><span class="live">Live in {live}</span><a class="quote" href="https://wa.me/918130296940?text={quote(f"Hi Open Idea! I'd like a quote for {html.unescape(name)}.")}" target="_blank" rel="noopener" data-lead="whatsapp">Get a quote <svg class="i"><use href="#arrow"/></svg></a></div>
   </article>''')
 prod_body = hero("Products", "Ready-to-use software, <em>live in days.</em>",
                  "Affordable products that solve everyday problems for Indian SMEs. Simple setup, small monthly fee, and support included.",
-                 [("all", "All 10 products"), ("all", "Setup in 3–15 days"), ("all", "Monthly plans from ₹299")])
+                 [("all", "All 10 products"), ("all", "Setup in 3–15 days"), ("all", "Support included")])
 prod_body += '\n<section id="all"><div class="wrap"><div class="pgrid">' + "\n".join(cards) + "</div></div></section>\n" + CTA
 open("products.html", "w").write(page("Products | Open Idea: WhatsApp AI, CRM, Billing &amp; More for SMEs",
                                       "Ready-to-deploy business products for Indian SMEs: WhatsApp AI assistant, AI website builder, CRM, billing, booking, inventory and more.",

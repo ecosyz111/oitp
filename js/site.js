@@ -40,9 +40,14 @@ root.classList.add('fast');
   window.heroReveal=reveal;
   const active=()=>root.dataset.theme==='dark'?D:L,idle=()=>root.dataset.theme==='dark'?L:D;
   const load=v=>{if(v.dataset.poster&&!v.poster)v.poster=v.dataset.poster;if(!v.src){v.src=(MOB&&v.dataset.srcM)?v.dataset.srcM:v.dataset.src;v.preload='auto'}};
-  [L,D].forEach(v=>{v.loop=true;v.muted=true;
+  const done=new Set();   /* each clip plays once, then holds on the touch frame */
+  const finish=v=>{if(done.has(v))return;done.add(v);v.pause();reveal();if(ctl)ctl.hidden=true};
+  [L,D].forEach(v=>{v.loop=false;v.muted=true;v.addEventListener('ended',()=>finish(v));
+    v.addEventListener('timeupdate',()=>{if(v.dataset.stop&&v.currentTime>=+v.dataset.stop)finish(v)});
     v.addEventListener('timeupdate',()=>{if(v===active()&&!revealed&&v.currentTime>=+v.dataset.reveal)reveal()})});
-  function play(fromStart){const a=active(),b=idle();load(a);b.pause();if(fromStart)a.currentTime=0;
+  function play(fromStart){const a=active(),b=idle();load(a);b.pause();
+    if(done.has(a)){if(ctl)ctl.hidden=true;return}   /* already played: stay on the held frame */
+    if(ctl)ctl.hidden=false;if(fromStart)a.currentTime=0;
     if(!paused)a.play().catch(()=>reveal());}
   window.heroSync=()=>play(false);
   if(root.dataset.theme==='dark')load(D);           // called after a theme toggle
@@ -54,7 +59,7 @@ root.classList.add('fast');
   addEventListener('scroll',()=>{if(scrollY>60)reveal()},{passive:true});
   const setCtl=()=>ctl&&(ctl.innerHTML=ic(paused?'play':'pause'),ctl.setAttribute('aria-label',paused?'Play background video':'Pause background video'));
   if(ctl){setCtl();ctl.onclick=()=>{paused=!paused;paused?active().pause():active().play().catch(()=>{});if(paused)reveal();setCtl()}}
-  new IntersectionObserver(([e])=>{if(paused)return;e.isIntersecting?active().play().catch(()=>{}):active().pause()}).observe($('section#home'));
+  new IntersectionObserver(([e])=>{const v=active();if(paused||done.has(v))return;e.isIntersecting?v.play().catch(()=>{}):v.pause()}).observe($('section#home'));
 })();
 
 /* ---------- lazy autoplay for section videos (play only when visible) ---------- */
