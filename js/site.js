@@ -19,9 +19,7 @@ if(tb)tb.onclick=()=>{
   document.startViewTransition(flip);
 };
 
-/* ---------- intro curtain: only first visit of the session, home only ---------- */
-(()=>{const i=$('.intro');if(!i)return;let seen=false;try{seen=sessionStorage.getItem('oi-intro')}catch(e){}
-  if(seen||RM||MOB){i.remove();root.classList.add('fast')}else{try{sessionStorage.setItem('oi-intro',1)}catch(e){};setTimeout(()=>i.remove(),2300)}})();
+root.classList.add('fast');
 
 /* ---------- hero headline → masked words ---------- */
 (()=>{const h=$('#heroTitle');if(!h)return;let i=0;
