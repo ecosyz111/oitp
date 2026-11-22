@@ -34,15 +34,16 @@ if(tb)tb.onclick=()=>{
   const reveal=()=>{if(revealed)return;revealed=true;clearTimeout(rt);root.classList.add('ready');window.startCounters&&startCounters()};
   window.heroReveal=reveal;
   const active=()=>root.dataset.theme==='dark'?D:L,idle=()=>root.dataset.theme==='dark'?L:D;
-  const load=v=>{if(!v.src){v.src=(MOB&&v.dataset.srcM)?v.dataset.srcM:v.dataset.src;v.preload='auto'}};
+  const load=v=>{if(v.dataset.poster&&!v.poster)v.poster=v.dataset.poster;if(!v.src){v.src=(MOB&&v.dataset.srcM)?v.dataset.srcM:v.dataset.src;v.preload='auto'}};
   [L,D].forEach(v=>{v.loop=true;v.muted=true;
     v.addEventListener('timeupdate',()=>{if(v===active()&&!revealed&&v.currentTime>=+v.dataset.reveal)reveal()})});
   function play(fromStart){const a=active(),b=idle();load(a);b.pause();if(fromStart)a.currentTime=0;
     if(!paused)a.play().catch(()=>reveal());}
-  window.heroSync=()=>play(false);           // called after a theme toggle
+  window.heroSync=()=>play(false);
+  if(root.dataset.theme==='dark')load(D);           // called after a theme toggle
   window.replayHero=()=>{if(MOB){play(true);return}revealed=false;root.classList.remove('ready');play(true);rt=setTimeout(reveal,5000)};
   const intro=$('.intro'),delay=intro&&!root.classList.contains('fast')?1500:150;
-  if(RM||MOB){reveal();setTimeout(()=>play(true),100)}else{setTimeout(()=>play(true),delay);rt=setTimeout(reveal,delay+3600)}
+  if(RM||MOB){reveal();setTimeout(()=>play(true),50)}else{setTimeout(()=>play(true),delay);rt=setTimeout(reveal,delay+3600)}
   [L,D].forEach(v=>v.addEventListener('playing',()=>{if(revealed||v!==active())return;clearTimeout(rt);rt=setTimeout(reveal,Math.max(0,(+v.dataset.reveal-v.currentTime+.8)*1000))}));
   [L,D].forEach(v=>v.addEventListener('error',reveal));
   addEventListener('scroll',()=>{if(scrollY>60)reveal()},{passive:true});
@@ -52,7 +53,7 @@ if(tb)tb.onclick=()=>{
 })();
 
 /* ---------- lazy autoplay for section videos (play only when visible) ---------- */
-$$('video[data-auto]').forEach(v=>{if(RM)return;new IntersectionObserver(([e])=>e.isIntersecting?v.play().catch(()=>{}):v.pause(),{threshold:.25}).observe(v)});
+$$('video[data-auto]').forEach(v=>{new IntersectionObserver(([e])=>{if(e.isIntersecting&&v.dataset.poster&&!v.poster)v.poster=v.dataset.poster;if(RM)return;e.isIntersecting?v.play().catch(()=>{}):v.pause()},{rootMargin:'300px 0px',threshold:0}).observe(v)});
 
 /* ---------- kick off hero entrance ---------- */
 if(!HOME)requestAnimationFrame(()=>root.classList.add('ready'));
@@ -158,11 +159,11 @@ function premium(){if(!G()||RM)return;const {gsap,ScrollTrigger}=window;gsap.reg
     b.addEventListener('pointerleave',()=>{xTo(0);yTo(0)})});
   ScrollTrigger.refresh();
 }
-(function load(){if(RM)return;const s=[
-  'https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js',
-  'https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js',
-  'https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js'];
-  let n=0;s.forEach(src=>{const el=document.createElement('script');el.src=src;el.async=false;el.onload=el.onerror=()=>{if(++n===s.length)document.fonts.ready.then(premium)};document.head.appendChild(el)});
+(function load(){if(RM)return;const s=['js/vendor/gsap.min.js','js/vendor/ScrollTrigger.min.js'];if(!MOB)s.push('js/vendor/lenis.min.js');
+  const go=()=>{let n=0;s.forEach(src=>{const el=document.createElement('script');el.src=src;el.async=false;el.onload=el.onerror=()=>{if(++n===s.length)document.fonts.ready.then(premium)};document.head.appendChild(el)})};
+  /* wait until the first screen has painted and the page is idle, so animation code never delays the hero */
+  const idle=()=>('requestIdleCallback' in window)?requestIdleCallback(go,{timeout:1200}):setTimeout(go,300);
+  document.readyState==='complete'?idle():addEventListener('load',idle,{once:true});
 })();
 
 /* =====================================================================
@@ -171,7 +172,7 @@ function premium(){if(!G()||RM)return;const {gsap,ScrollTrigger}=window;gsap.reg
 (()=>{const cf=$('#cf'),stage=$('#cfStage'),dataEl=$('#demoData');if(!cf||!dataEl)return;
   const D=JSON.parse(dataEl.textContent),esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
   stage.innerHTML=D.map((d,i)=>`<a class="cf-card" href="${esc(d.u)}" target="_blank" rel="noopener" data-i="${i}" aria-label="${esc(d.n)}, ${esc(d.t)}: open live demo in a new tab">
-    <div class="cf-ph"><img src="${d.i}" alt="" loading="${i<4?'eager':'lazy'}" decoding="async"><span class="cf-tag">${esc(d.t)}</span><span class="cf-view">View<br>live</span></div>
+    <div class="cf-ph"><img src="${d.i}" alt="" loading="lazy" decoding="async"><span class="cf-tag">${esc(d.t)}</span><span class="cf-view">View<br>live</span></div>
     <div class="cf-cap"><h3>${esc(d.n)}</h3><p>${esc(d.d)}</p><div class="cf-tags">${d.g.map(g=>`<span>${esc(g)}</span>`).join('')}</div></div></a>`).join('');
   const cards=[...stage.children],curEl=$('#cfCur'),totEl=$('#cfTot'),live=$('#cfLive');
   let list=D.map((_,i)=>i),cur=0,timer,hover=false,inView=false;

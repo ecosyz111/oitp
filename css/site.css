@@ -1,3 +1,6 @@
+@font-face{font-family:"Bricolage Grotesque";src:url(../fonts/bricolage-500-800.woff2) format("woff2");font-weight:500 800;font-style:normal;font-display:swap}
+@font-face{font-family:"Inter";src:url(../fonts/inter-400-700.woff2) format("woff2");font-weight:400 700;font-style:normal;font-display:swap}
+@font-face{font-family:"Instrument Serif";src:url(../fonts/instrument-serif-italic.woff2) format("woff2");font-weight:400;font-style:italic;font-display:swap}
 /* ================= tokens ================= */
 :root{
   --primary:#00C7C7;--primary-d:#00979D;--accent:#22E3E3;--navy:#0C1B2A;

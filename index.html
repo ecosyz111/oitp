@@ -19,9 +19,9 @@
 <link rel="apple-touch-icon" href="img/logo.webp">
 <link rel="preload" as="image" href="media/hero-1-poster.webp" fetchpriority="high">
 <script>try{var t=localStorage.getItem("oi-theme-v2");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Serif:ital@1&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preload" href="fonts/bricolage-500-800.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/inter-400-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/instrument-serif-italic.woff2" as="font" type="font/woff2" crossorigin>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"ProfessionalService","name":"Open Idea","legalName":"Ecosyz Core Solutions Private Limited",
 "description":"AI-powered websites, business software, CRM, WhatsApp AI assistants, automation and digital marketing for small and medium businesses.",
@@ -29,7 +29,7 @@
 "address":{"@type":"PostalAddress","streetAddress":"8125, 8th Floor, Gaur City Mall Office Space, Sector 4","addressLocality":"Greater Noida West","addressRegion":"Uttar Pradesh","postalCode":"201318","addressCountry":"IN"},
 "areaServed":"IN","sameAs":["https://openidea.co.in","https://www.linkedin.com/company/ecosyz/","https://www.instagram.com/openidea.ai_platform/","https://x.com/OpenIdeaOrg"]}
 </script>
-<link rel="stylesheet" href="css/site.css">
+<link rel="stylesheet" href="css/site.min.css?v=45ee82f5">
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -100,7 +100,7 @@
  <!-- Hero media playlist: add more videos / gifs in HERO_MEDIA (script at bottom) -->
  <div class="hero-media" id="heroMedia" aria-hidden="true">
   <video class="hv hv-light" muted playsinline preload="auto" poster="media/hero-1-poster.webp" data-src="media/hero-1.mp4" data-src-m="media/hero-1-m.mp4" data-reveal="3.3"></video>
-  <video class="hv hv-dark" muted playsinline preload="none" poster="media/hero-dark-poster.webp" data-src="media/hero-dark.mp4" data-src-m="media/hero-dark-m.mp4" data-reveal="4.3"></video>
+  <video class="hv hv-dark" muted playsinline preload="none" data-poster="media/hero-dark-poster.webp" data-src="media/hero-dark.mp4" data-src-m="media/hero-dark-m.mp4" data-reveal="4.3"></video>
  </div>
  <button class="media-ctl" id="mediaCtl" type="button"></button>
 
@@ -148,7 +148,7 @@
 
 <section class="alt" aria-labelledby="duo-h">
  <div class="wrap duo">
-  <div class="duo-media rv" data-rv="wipe"><video data-auto muted loop playsinline preload="none" poster="media/hero-2-poster.webp" src="media/hero-2.mp4" aria-label="A hand sketches a glowing face while a robotic hand reaches in to connect"></video></div>
+  <div class="duo-media rv" data-rv="wipe"><video data-auto muted loop playsinline preload="none" data-poster="media/hero-2-poster.webp" src="media/hero-2.mp4" aria-label="A hand sketches a glowing face while a robotic hand reaches in to connect"></video></div>
   <div class="rv" data-rv="right">
    <span class="eyebrow">The Right Balance</span>
    <h2 id="duo-h">Human Creativity <span class="ser">×</span> AI Intelligence</h2>
@@ -365,6 +365,6 @@
  <a href="tel:+918130296940"><svg class="i"><use href="#phone"/></svg>Call</a>
 </nav>
 
-<script src="js/site.js" defer></script>
+<script src="js/site.min.js?v=e0585613" defer></script>
 </body>
 </html>
