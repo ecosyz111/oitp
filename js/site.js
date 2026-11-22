@@ -21,7 +21,7 @@ if(tb)tb.onclick=()=>{
 
 /* ---------- intro curtain: only first visit of the session, home only ---------- */
 (()=>{const i=$('.intro');if(!i)return;let seen=false;try{seen=sessionStorage.getItem('oi-intro')}catch(e){}
-  if(seen||RM){i.remove();root.classList.add('fast')}else{try{sessionStorage.setItem('oi-intro',1)}catch(e){};setTimeout(()=>i.remove(),2300)}})();
+  if(seen||RM||MOB){i.remove();root.classList.add('fast')}else{try{sessionStorage.setItem('oi-intro',1)}catch(e){};setTimeout(()=>i.remove(),2300)}})();
 
 /* ---------- hero headline → masked words ---------- */
 (()=>{const h=$('#heroTitle');if(!h)return;let i=0;
@@ -40,9 +40,11 @@ if(tb)tb.onclick=()=>{
   function play(fromStart){const a=active(),b=idle();load(a);b.pause();if(fromStart)a.currentTime=0;
     if(!paused)a.play().catch(()=>reveal());}
   window.heroSync=()=>play(false);           // called after a theme toggle
-  window.replayHero=()=>{revealed=false;root.classList.remove('ready');play(true);rt=setTimeout(reveal,7000)};
+  window.replayHero=()=>{if(MOB){play(true);return}revealed=false;root.classList.remove('ready');play(true);rt=setTimeout(reveal,5000)};
   const intro=$('.intro'),delay=intro&&!root.classList.contains('fast')?1500:150;
-  if(RM)reveal();else{setTimeout(()=>play(true),delay);rt=setTimeout(reveal,delay+6500)}
+  if(RM||MOB){reveal();setTimeout(()=>play(true),100)}else{setTimeout(()=>play(true),delay);rt=setTimeout(reveal,delay+3600)}
+  [L,D].forEach(v=>v.addEventListener('playing',()=>{if(revealed||v!==active())return;clearTimeout(rt);rt=setTimeout(reveal,Math.max(0,(+v.dataset.reveal-v.currentTime+.8)*1000))}));
+  [L,D].forEach(v=>v.addEventListener('error',reveal));
   addEventListener('scroll',()=>{if(scrollY>60)reveal()},{passive:true});
   const setCtl=()=>ctl&&(ctl.innerHTML=ic(paused?'play':'pause'),ctl.setAttribute('aria-label',paused?'Play background video':'Pause background video'));
   if(ctl){setCtl();ctl.onclick=()=>{paused=!paused;paused?active().pause():active().play().catch(()=>{});if(paused)reveal();setCtl()}}

@@ -832,3 +832,10 @@ form.card label,form.card input,form.card select,form.card textarea{min-width:0}
   h1,h2,h3,p,span,b,a,li,label{overflow-wrap:anywhere;min-width:0}
 }
 @media (max-width:700px){.hero-media,:root[data-theme="dark"] .hero-media,.hero-media[data-kind]{-webkit-mask-size:100% 100%;mask-size:100% 100%;-webkit-mask-position:0 0;mask-position:0 0}}
+/* mobile: copy appears immediately (no waiting for the video) */
+@media (max-width:700px){
+  .fast.ready .hero h1 .w>span{animation-duration:.7s;animation-delay:calc(.05s + var(--i) * 40ms)}
+  .fast.ready .hero .fx{animation-duration:.6s;animation-delay:.35s}
+  .fast.ready .hero .ctas.fx{animation-delay:.45s}
+  .fast.ready .hero .stats.fx{animation-delay:.55s}
+}
