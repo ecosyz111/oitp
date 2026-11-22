@@ -40,7 +40,8 @@ for page, slug in PAGES.items():
     s = open(p, encoding="utf-8").read()
     s = ATTR.sub(lambda m: f'{m.group(1)}="{fix(m.group(2))}"', s)
     s = s.replace('"i":"img/', f'"i":"{base}img/')                       # demo carousel data
-    s = re.sub(r'(<meta property="og:image" content=")([^"]+)"', lambda m: f'{m.group(1)}{origin}{fix(m.group(2))}"', s)
+    s = re.sub(r'(<meta property="og:image" content=")([^"]+)"', lambda m: m.group(1) + (origin + fix(m.group(2)) if fix(m.group(2)).startswith('/') else m.group(2)) + '"', s)
+    s = re.sub(r'<meta property="og:url" content="[^"]*">', f'<meta property="og:url" content="{origin}{base}{slug}">', s)
     canon = f'<link rel="canonical" href="{origin}{base}{slug}">'
     s = re.sub(r'<link rel="canonical"[^>]*>\n?', "", s).replace("</title>", "</title>\n" + canon, 1)
     open(p, "w", encoding="utf-8").write(s)
