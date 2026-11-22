@@ -85,11 +85,59 @@ for sid, k, title, img, lead, items in SERVICES:
   </div>
   <ul class="svc-list">{lis}</ul>
  </div>''')
-total = sum(len(s[5]) for s in SERVICES)
+FAST = [
+    ("mvp", "Product &amp; <em>MVP</em>", "rocket", [
+        ("AI-wrapper SaaS MVP", "GPT/Claude + UI + auth + payments", "1–3 wk"),
+        ("No-code / low-code MVP", "Bubble, FlutterFlow, Lovable", "1–2 wk"),
+        ("Landing page + waitlist", "with Stripe / Razorpay", "2–4 days"),
+        ("Internal tool / admin dashboard", "Retool, Supabase", "1–2 wk"),
+        ("Chrome extension", "built and published", "3–7 days"),
+        ("Clickable prototype", "Figma to live demo", "3–5 days"),
+        ("Shopify / WooCommerce store", "full store setup", "3–7 days"),
+        ("MVP rescue", "bugs, deploy, scaling", "1 wk"),
+        ("API integrations", "payments, CRM, WhatsApp", "2–5 days"),
+        ("Product teardown + roadmap", "for founders", "2–3 days")]),
+    ("sales", "Marketing &amp; <em>Sales</em>", "mega", [
+        ("Cold email outbound system", "domains + warmup + sequences", "1 wk"),
+        ("LinkedIn ghostwriting", "for founders", "Ongoing"),
+        ("Short-form video / UGC ads", "Reels, Shorts", "2–5 days/batch"),
+        ("Meta / Google ads", "setup + management", "3-day setup"),
+        ("Landing page CRO", "audit + rewrite", "2–4 days"),
+        ("Lead list building", "Sales Navigator + Apollo + enrichment", "1–3 days"),
+        ("Sales deck + pitch deck", "story, design, numbers", "2–4 days"),
+        ("Email marketing flows", "Klaviyo / WhatsApp automation", "3–5 days"),
+        ("SEO content", "AI-drafted, human-edited", "Ongoing"),
+        ("CRM setup", "HubSpot / Zoho pipeline", "3–5 days")]),
+    ("auto", "AI <em>Automation</em>", "cpu", [
+        ("Custom AI agent", "support / sales bot on your data", "1–2 wk"),
+        ("WhatsApp AI chatbot", "lead capture + FAQ + booking", "3–7 days"),
+        ("Workflow automation", "n8n / Make / Zapier", "2–5 days"),
+        ("AI voice agent", "calls, appointment booking", "1–2 wk"),
+        ("RAG chatbot", "on your company docs", "1 wk"),
+        ("AI lead gen + outreach", "fully automated", "1 wk"),
+        ("Document processing", "invoices, PDFs to sheets / ERP", "3–7 days"),
+        ("AI content engine", "1 input to blogs, posts, reels", "3–5 days"),
+        ("Automation maintenance", "monthly retainer", "Ongoing"),
+        ("AI audit + roadmap", "for SMBs", "2–3 days")]),
+]
+fcols = []
+for fid, ftitle, fico, fitems in FAST:
+    rows = ""
+    for n, d, t in fitems:
+        wa = quote("Hi Open Idea! I am interested in: " + html.unescape(n) + ".")
+        rows += ('<li class="rv"><a href="https://wa.me/918130296940?text=' + wa + '" target="_blank" rel="noopener" data-lead="whatsapp">'
+                 '<b>' + n + '</b><small>' + d + '</small><span class="ft-t">' + t + '</span></a></li>')
+    fcols.append('<div class="ft-col" id="' + fid + '">\n   <div class="ft-head"><span class="ico"><svg class="i"><use href="#' + fico + '"/></svg></span><h3>'
+                 + ftitle + '</h3><span class="ft-n">' + str(len(fitems)) + '</span></div>\n   <ul class="ft-list">' + rows + '</ul>\n  </div>')
+FAST_HTML = ('<section class="fast" id="fast"><div class="wrap">\n'
+             ' <div class="ft-intro rv"><span class="eyebrow">Fast-track packages</span><h2>Fixed scope. <em>Clear timelines.</em></h2>'
+             '<p>Pick a package, message us on WhatsApp, and we can start this week.</p></div>\n'
+             ' <div class="ft-grid">' + "".join(fcols) + '</div>\n</div></section>\n')
+total = sum(len(s[5]) for s in SERVICES) + sum(len(f[3]) for f in FAST)
 svc_body = hero("Services", f"Every service your business needs, <em>under one roof.</em>",
-                f"{total} services across websites, software, AI, marketing, integrations and branding, built for Indian SMEs.",
-                [(s[0], re.sub(r"<.*?>", "", s[2]).replace("&amp;", "&")) for s in SERVICES])
-svc_body += '\n<section><div class="wrap">' + "\n".join(blocks) + "</div></section>\n" + CTA
+                f"{total} services across MVPs, websites, software, AI, marketing, integrations and branding, for Indian SMEs and startups.",
+                [("fast", "Fast-track packages")] + [(s[0], re.sub(r"<.*?>", "", s[2]).replace("&amp;", "&")) for s in SERVICES])
+svc_body += '\n' + FAST_HTML + '<section><div class="wrap">' + "\n".join(blocks) + "</div></section>\n" + CTA
 open("services.html", "w").write(page("Services | Open Idea: Websites, Software, AI Automation &amp; Marketing",
                                       "Explore Open Idea's services: website development, business software, AI automation, digital marketing, integrations and branding for SMEs in India.",
                                       svc_body))
