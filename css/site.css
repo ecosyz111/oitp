@@ -947,9 +947,7 @@ form.card label,form.card input,form.card select,form.card textarea{min-width:0}
 .logo,.menu a,.nav-r .btn{white-space:nowrap}
 .menu{gap:2px}.menu a{padding:8px 11px}
 header.solid .nav{max-width:1240px}
-@media (max-width:1320px){.menu a[href$="#process"]{display:none}}
-@media (max-width:1180px){.menu a[href$="#industries"]{display:none}.menu a{padding:8px 9px;font-size:13.5px}}
-@media (max-width:1040px){.menu a[href$="#automation"]{display:none}}
+@media (max-width:1180px){.menu a{padding:8px 10px;font-size:14px}}
 /* ---- fast-track packages (services page) ---- */
 .fast{padding-bottom:24px}
 .ft-intro{max-width:620px;margin-bottom:32px}
@@ -1020,3 +1018,5 @@ header.solid .nav{max-width:1240px}
   .sp-more{padding:14px;gap:8px}.sp-more a{font-size:12.5px;padding:7px 11px}
   .sp-when{font-size:10px;margin-left:6px}
 }
+.st-btns{display:flex;gap:10px;flex-wrap:wrap;align-items:center;flex:none}
+@media (max-width:700px){.st-btns{flex-direction:column;align-items:stretch;width:100%}.st-btns .btn{justify-content:center}}
