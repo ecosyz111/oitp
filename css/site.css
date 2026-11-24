@@ -1020,3 +1020,15 @@ header.solid .nav{max-width:1240px}
 }
 .st-btns{display:flex;gap:10px;flex-wrap:wrap;align-items:center;flex:none}
 @media (max-width:700px){.st-btns{flex-direction:column;align-items:stretch;width:100%}.st-btns .btn{justify-content:center}}
+/* second startup case: Tocxi */
+.st-more{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:24px;align-items:center;margin-top:20px;padding:26px 28px;border-radius:26px;background:linear-gradient(120deg,#0B1424,#1B2550);color:#fff;box-shadow:var(--shadow-lg)}
+.st-more-ico{width:80px;height:80px;border-radius:20px;background:#fff;object-fit:cover}
+.st-more h3{font-family:var(--serif);font-style:italic;font-weight:400;font-size:clamp(30px,3vw,40px);margin:10px 0 0;line-height:1}
+.st-more .st-kind{margin:6px 0 8px}
+.st-more-txt p:not(.st-kind){font-size:14.5px;opacity:.85;max-width:560px}
+.st-apps{display:grid;grid-template-columns:1fr 1fr;gap:8px;min-width:250px}
+.st-apps a{display:flex;align-items:center;justify-content:center;gap:6px;padding:11px 14px;border-radius:12px;font-size:13.5px;font-weight:600;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);transition:background var(--t-small),border-color var(--t-small)}
+.st-apps a:hover{background:rgba(255,255,255,.16);border-color:var(--accent)}
+.st-apps .st-apps-web{color:var(--accent)}
+@media (max-width:900px){.st-more{grid-template-columns:auto minmax(0,1fr)}.st-apps{grid-column:1/-1;min-width:0;grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media (max-width:700px){.st-more{gap:14px;padding:18px;border-radius:18px}.st-more-ico{width:56px;height:56px;border-radius:14px}.st-more-txt p:not(.st-kind){font-size:13px}.st-apps{grid-template-columns:1fr 1fr}.st-apps a{font-size:12.5px;padding:10px}}

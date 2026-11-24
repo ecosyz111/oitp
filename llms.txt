@@ -19,5 +19,6 @@ Key facts:
 ## More
 - [All services](https://techpartner.openidea.co.in/services.html): full list of 75+ services, including fast-track packages with timelines.
 - [Products](https://techpartner.openidea.co.in/products.html): ready-to-use software for SMEs (WhatsApp AI assistant, mini CRM, billing, booking, inventory and more).
+- Live startup products built with Open Idea: [Bhojpatra](https://www.bhojpatra.co.in/) (feast booking platform) and [Tocxi](https://www.tocxi.com/) (India's unified mobility app for metro and bus tickets, live bus timings, parcels and rides, on Android and iOS).
 - [Home and FAQ](https://techpartner.openidea.co.in/): overview, reviews, case study and 16 common questions answered.
 - [Main website](https://openidea.co.in)
